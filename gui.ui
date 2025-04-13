@@ -24,7 +24,7 @@
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout" stretch="2,0,7">
       <item>
-       <layout class="QVBoxLayout" name="verticalLayout_3" stretch="1,1,1,1,1,1,0,0,0,0,0,1">
+       <layout class="QVBoxLayout" name="verticalLayout_3" stretch="1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,1">
         <property name="topMargin">
          <number>0</number>
         </property>
@@ -3361,20 +3361,63 @@
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_21">
           <item>
-           <widget class="QRadioButton" name="radioButton">
+           <widget class="QRadioButton" name="radioNetwork">
             <property name="text">
              <string>Sieć</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QRadioButton" name="radioButton_2">
+           <widget class="QRadioButton" name="radioLocal">
             <property name="text">
              <string>Lokalnie</string>
             </property>
            </widget>
           </item>
          </layout>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_20">
+          <property name="text">
+           <string>Ustawienia pracy sieciowej</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QListWidget" name="listWidgetClientServer">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="currentRow">
+           <number>0</number>
+          </property>
+          <property name="sortingEnabled">
+           <bool>false</bool>
+          </property>
+          <item>
+           <property name="text">
+            <string>Serwer PID</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Klient ARX</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_15"/>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_22">
+          <property name="text">
+           <string>Dane do połączenia się z serwerem</string>
+          </property>
+         </widget>
         </item>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_25">

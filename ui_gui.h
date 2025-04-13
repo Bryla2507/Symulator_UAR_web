@@ -17,6 +17,7 @@
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
@@ -89,8 +90,12 @@ public:
     QFrame *line_4;
     QLabel *label_6;
     QHBoxLayout *horizontalLayout_21;
-    QRadioButton *radioButton;
-    QRadioButton *radioButton_2;
+    QRadioButton *radioNetwork;
+    QRadioButton *radioLocal;
+    QLabel *label_20;
+    QListWidget *listWidgetClientServer;
+    QHBoxLayout *horizontalLayout_15;
+    QLabel *label_22;
     QHBoxLayout *horizontalLayout_25;
     QLabel *label_18;
     QTextEdit *textEdit;
@@ -893,18 +898,41 @@ public:
 
         horizontalLayout_21 = new QHBoxLayout();
         horizontalLayout_21->setObjectName("horizontalLayout_21");
-        radioButton = new QRadioButton(centralwidget);
-        radioButton->setObjectName("radioButton");
+        radioNetwork = new QRadioButton(centralwidget);
+        radioNetwork->setObjectName("radioNetwork");
 
-        horizontalLayout_21->addWidget(radioButton);
+        horizontalLayout_21->addWidget(radioNetwork);
 
-        radioButton_2 = new QRadioButton(centralwidget);
-        radioButton_2->setObjectName("radioButton_2");
+        radioLocal = new QRadioButton(centralwidget);
+        radioLocal->setObjectName("radioLocal");
 
-        horizontalLayout_21->addWidget(radioButton_2);
+        horizontalLayout_21->addWidget(radioLocal);
 
 
         verticalLayout_3->addLayout(horizontalLayout_21);
+
+        label_20 = new QLabel(centralwidget);
+        label_20->setObjectName("label_20");
+
+        verticalLayout_3->addWidget(label_20);
+
+        listWidgetClientServer = new QListWidget(centralwidget);
+        new QListWidgetItem(listWidgetClientServer);
+        new QListWidgetItem(listWidgetClientServer);
+        listWidgetClientServer->setObjectName("listWidgetClientServer");
+        listWidgetClientServer->setMaximumSize(QSize(16777215, 40));
+
+        verticalLayout_3->addWidget(listWidgetClientServer);
+
+        horizontalLayout_15 = new QHBoxLayout();
+        horizontalLayout_15->setObjectName("horizontalLayout_15");
+
+        verticalLayout_3->addLayout(horizontalLayout_15);
+
+        label_22 = new QLabel(centralwidget);
+        label_22->setObjectName("label_22");
+
+        verticalLayout_3->addWidget(label_22);
 
         horizontalLayout_25 = new QHBoxLayout();
         horizontalLayout_25->setObjectName("horizontalLayout_25");
@@ -1436,7 +1464,7 @@ public:
         verticalLayout_3->setStretch(3, 1);
         verticalLayout_3->setStretch(4, 1);
         verticalLayout_3->setStretch(5, 1);
-        verticalLayout_3->setStretch(11, 1);
+        verticalLayout_3->setStretch(15, 1);
 
         horizontalLayout->addLayout(verticalLayout_3);
 
@@ -1512,8 +1540,19 @@ public:
         label->setText(QCoreApplication::translate("GUI", "MODEL ARX", nullptr));
         setModel->setText(QCoreApplication::translate("GUI", "Dodaj parametry Modelu ARX", nullptr));
         label_6->setText(QCoreApplication::translate("GUI", "USTAWIENIA PRACY SIECIOWEJ I LOKALNEJ", nullptr));
-        radioButton->setText(QCoreApplication::translate("GUI", "Sie\304\207", nullptr));
-        radioButton_2->setText(QCoreApplication::translate("GUI", "Lokalnie", nullptr));
+        radioNetwork->setText(QCoreApplication::translate("GUI", "Sie\304\207", nullptr));
+        radioLocal->setText(QCoreApplication::translate("GUI", "Lokalnie", nullptr));
+        label_20->setText(QCoreApplication::translate("GUI", "Ustawienia pracy sieciowej", nullptr));
+
+        const bool __sortingEnabled = listWidgetClientServer->isSortingEnabled();
+        listWidgetClientServer->setSortingEnabled(false);
+        QListWidgetItem *___qlistwidgetitem = listWidgetClientServer->item(0);
+        ___qlistwidgetitem->setText(QCoreApplication::translate("GUI", "Serwer PID", nullptr));
+        QListWidgetItem *___qlistwidgetitem1 = listWidgetClientServer->item(1);
+        ___qlistwidgetitem1->setText(QCoreApplication::translate("GUI", "Klient ARX", nullptr));
+        listWidgetClientServer->setSortingEnabled(__sortingEnabled);
+
+        label_22->setText(QCoreApplication::translate("GUI", "Dane do po\305\202\304\205czenia si\304\231 z serwerem", nullptr));
         label_18->setText(QCoreApplication::translate("GUI", "Adres IP", nullptr));
         label_19->setText(QCoreApplication::translate("GUI", "Port", nullptr));
         pushButton->setText(QCoreApplication::translate("GUI", "Zatwierd\305\272", nullptr));
