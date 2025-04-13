@@ -466,6 +466,10 @@ void GUI::on_networkConfirm_clicked()
     setHorizontalLayout(ui->horizontalLayout_13, true);
     setHorizontalLayout(ui->horizontalLayout_14, true);
     setGridLayout(ui->gridLayout, true);
+    if(server != nullptr)
+        server->close();
+    if(clientSocket != nullptr)
+        clientSocket->disconnectFromHost();
 
 
     if(ui->radioNetwork->isChecked())
