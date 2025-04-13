@@ -458,6 +458,11 @@ void setHorizontalLayout(QHBoxLayout* layout, bool var) {
 void GUI::on_networkConfirm_clicked()
 {
     setGridLayout(ui->gridLayout_3, true);
+    setHorizontalLayout(ui->horizontalLayout_9, true);
+    setHorizontalLayout(ui->horizontalLayout_10, true);
+    setHorizontalLayout(ui->horizontalLayout_11, true);
+    setHorizontalLayout(ui->horizontalLayout_12, true);
+    setHorizontalLayout(ui->horizontalLayout_13, true);
     setHorizontalLayout(ui->horizontalLayout_14, true);
     setGridLayout(ui->gridLayout, true);
 
@@ -467,6 +472,11 @@ void GUI::on_networkConfirm_clicked()
         if(ui->listWidgetClientServer->currentItem()==ui->listWidgetClientServer->item(1))
         {
             setGridLayout(ui->gridLayout_3, false);
+            setHorizontalLayout(ui->horizontalLayout_9, false);
+            setHorizontalLayout(ui->horizontalLayout_10, false);
+            setHorizontalLayout(ui->horizontalLayout_11, false);
+            setHorizontalLayout(ui->horizontalLayout_12, false);
+            setHorizontalLayout(ui->horizontalLayout_13, false);
             setHorizontalLayout(ui->horizontalLayout_14, false);
         }
 
