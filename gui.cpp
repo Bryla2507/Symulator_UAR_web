@@ -430,3 +430,50 @@ void GUI::updateGUIControls(SignalType s, double a, double per, double f, double
     }
 }
 
+
+void GUI::on_pushButton_clicked() //deprecated
+{
+
+}
+
+
+void setGridLayout(QGridLayout* layout, bool var) {
+    for (int i = 0; i < layout->count(); ++i) {
+        QWidget* widget = layout->itemAt(i)->widget();
+        if (widget) {
+            widget->setEnabled(var);
+        }
+    }
+}
+
+void setHorizontalLayout(QHBoxLayout* layout, bool var) {
+    for (int i = 0; i < layout->count(); ++i) {
+        QWidget* widget = layout->itemAt(i)->widget();
+        if (widget) {
+            widget->setEnabled(var);
+        }
+    }
+}
+
+void GUI::on_networkConfirm_clicked()
+{
+    setGridLayout(ui->gridLayout_3, true);
+    setHorizontalLayout(ui->horizontalLayout_14, true);
+    setGridLayout(ui->gridLayout, true);
+
+
+    if(ui->radioNetwork->isChecked())
+    {
+        if(ui->listWidgetClientServer->currentItem()==ui->listWidgetClientServer->item(1))
+        {
+            setGridLayout(ui->gridLayout_3, false);
+            setHorizontalLayout(ui->horizontalLayout_14, false);
+        }
+
+        else
+        {
+            setGridLayout(ui->gridLayout, false);
+        }
+    }
+}
+

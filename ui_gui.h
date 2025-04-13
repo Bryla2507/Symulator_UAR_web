@@ -102,7 +102,7 @@ public:
     QHBoxLayout *horizontalLayout_26;
     QLabel *label_19;
     QTextEdit *textEdit_2;
-    QPushButton *pushButton;
+    QPushButton *networkConfirm;
     QGridLayout *gridLayout_2;
     QHBoxLayout *horizontalLayout_18;
     QLabel *label_21;
@@ -921,6 +921,7 @@ public:
         new QListWidgetItem(listWidgetClientServer);
         listWidgetClientServer->setObjectName("listWidgetClientServer");
         listWidgetClientServer->setMaximumSize(QSize(16777215, 40));
+        listWidgetClientServer->setSortingEnabled(false);
 
         verticalLayout_3->addWidget(listWidgetClientServer);
 
@@ -966,10 +967,10 @@ public:
 
         verticalLayout_3->addLayout(horizontalLayout_26);
 
-        pushButton = new QPushButton(centralwidget);
-        pushButton->setObjectName("pushButton");
+        networkConfirm = new QPushButton(centralwidget);
+        networkConfirm->setObjectName("networkConfirm");
 
-        verticalLayout_3->addWidget(pushButton);
+        verticalLayout_3->addWidget(networkConfirm);
 
         gridLayout_2 = new QGridLayout();
         gridLayout_2->setObjectName("gridLayout_2");
@@ -1509,6 +1510,9 @@ public:
 
         retranslateUi(GUI);
 
+        listWidgetClientServer->setCurrentRow(0);
+
+
         QMetaObject::connectSlotsByName(GUI);
     } // setupUi
 
@@ -1555,7 +1559,7 @@ public:
         label_22->setText(QCoreApplication::translate("GUI", "Dane do po\305\202\304\205czenia si\304\231 z serwerem", nullptr));
         label_18->setText(QCoreApplication::translate("GUI", "Adres IP", nullptr));
         label_19->setText(QCoreApplication::translate("GUI", "Port", nullptr));
-        pushButton->setText(QCoreApplication::translate("GUI", "Zatwierd\305\272", nullptr));
+        networkConfirm->setText(QCoreApplication::translate("GUI", "Zatwierd\305\272", nullptr));
         label_21->setText(QCoreApplication::translate("GUI", "Interwa\305\202 (min. 0,02 s):", nullptr));
         setLoop->setText(QCoreApplication::translate("GUI", "Zatwierd\305\272 parametry", nullptr));
         label_2->setText(QCoreApplication::translate("GUI", "SYMULACJA", nullptr));

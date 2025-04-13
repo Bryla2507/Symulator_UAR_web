@@ -3462,7 +3462,7 @@
          </layout>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton">
+         <widget class="QPushButton" name="networkConfirm">
           <property name="text">
            <string>Zatwierdź</string>
           </property>

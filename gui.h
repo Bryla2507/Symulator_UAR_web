@@ -72,6 +72,10 @@ private slots:
     void on_load_clicked();
 
 
+    void on_pushButton_clicked();
+
+    void on_networkConfirm_clicked();
+
 private:
     Ui::GUI *ui;
     Dialog *m_window;
