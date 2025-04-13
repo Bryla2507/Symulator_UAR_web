@@ -293,11 +293,11 @@ void GUI::on_setModel_clicked()
 
     m_window=new Dialog(data, nullptr);
     int result=m_window->exec();
-
-    if(result)
-        ui->status->setText("OK");
-    else
-        ui->status->setText("FAIL");
+//
+  //  if(result)
+    //    ui->status->setText("OK");
+    //else
+    //    ui->status->setText("FAIL");
 
     std::vector<double> coefficientsA = convertToVector(data.inputA);
     std::vector<double> coefficientsB = convertToVector(data.inputB);
