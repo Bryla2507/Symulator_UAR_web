@@ -98,11 +98,12 @@ public:
     QLabel *label_22;
     QHBoxLayout *horizontalLayout_25;
     QLabel *label_18;
-    QTextEdit *textEdit;
+    QTextEdit *textIP;
     QHBoxLayout *horizontalLayout_26;
     QLabel *label_19;
-    QTextEdit *textEdit_2;
+    QTextEdit *textPort;
     QPushButton *networkConfirm;
+    QPushButton *testConnect;
     QGridLayout *gridLayout_2;
     QHBoxLayout *horizontalLayout_18;
     QLabel *label_21;
@@ -131,7 +132,7 @@ public:
     {
         if (GUI->objectName().isEmpty())
             GUI->setObjectName("GUI");
-        GUI->resize(1206, 1107);
+        GUI->resize(1206, 1205);
         QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Preferred);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -942,11 +943,11 @@ public:
 
         horizontalLayout_25->addWidget(label_18);
 
-        textEdit = new QTextEdit(centralwidget);
-        textEdit->setObjectName("textEdit");
-        textEdit->setMaximumSize(QSize(16777215, 30));
+        textIP = new QTextEdit(centralwidget);
+        textIP->setObjectName("textIP");
+        textIP->setMaximumSize(QSize(16777215, 30));
 
-        horizontalLayout_25->addWidget(textEdit);
+        horizontalLayout_25->addWidget(textIP);
 
 
         verticalLayout_3->addLayout(horizontalLayout_25);
@@ -958,11 +959,11 @@ public:
 
         horizontalLayout_26->addWidget(label_19);
 
-        textEdit_2 = new QTextEdit(centralwidget);
-        textEdit_2->setObjectName("textEdit_2");
-        textEdit_2->setMaximumSize(QSize(16777215, 30));
+        textPort = new QTextEdit(centralwidget);
+        textPort->setObjectName("textPort");
+        textPort->setMaximumSize(QSize(16777215, 30));
 
-        horizontalLayout_26->addWidget(textEdit_2);
+        horizontalLayout_26->addWidget(textPort);
 
 
         verticalLayout_3->addLayout(horizontalLayout_26);
@@ -971,6 +972,11 @@ public:
         networkConfirm->setObjectName("networkConfirm");
 
         verticalLayout_3->addWidget(networkConfirm);
+
+        testConnect = new QPushButton(centralwidget);
+        testConnect->setObjectName("testConnect");
+
+        verticalLayout_3->addWidget(testConnect);
 
         gridLayout_2 = new QGridLayout();
         gridLayout_2->setObjectName("gridLayout_2");
@@ -1465,7 +1471,7 @@ public:
         verticalLayout_3->setStretch(3, 1);
         verticalLayout_3->setStretch(4, 1);
         verticalLayout_3->setStretch(5, 1);
-        verticalLayout_3->setStretch(15, 1);
+        verticalLayout_3->setStretch(16, 1);
 
         horizontalLayout->addLayout(verticalLayout_3);
 
@@ -1556,10 +1562,11 @@ public:
         ___qlistwidgetitem1->setText(QCoreApplication::translate("GUI", "Klient ARX", nullptr));
         listWidgetClientServer->setSortingEnabled(__sortingEnabled);
 
-        label_22->setText(QCoreApplication::translate("GUI", "Dane do po\305\202\304\205czenia si\304\231 z serwerem", nullptr));
-        label_18->setText(QCoreApplication::translate("GUI", "Adres IP", nullptr));
+        label_22->setText(QCoreApplication::translate("GUI", "Dane do po\305\202\304\205czenia", nullptr));
+        label_18->setText(QCoreApplication::translate("GUI", "Adres IP serwera", nullptr));
         label_19->setText(QCoreApplication::translate("GUI", "Port", nullptr));
         networkConfirm->setText(QCoreApplication::translate("GUI", "Zatwierd\305\272", nullptr));
+        testConnect->setText(QCoreApplication::translate("GUI", "Test po\305\202\304\205czenia", nullptr));
         label_21->setText(QCoreApplication::translate("GUI", "Interwa\305\202 (min. 0,02 s):", nullptr));
         setLoop->setText(QCoreApplication::translate("GUI", "Zatwierd\305\272 parametry", nullptr));
         label_2->setText(QCoreApplication::translate("GUI", "SYMULACJA", nullptr));

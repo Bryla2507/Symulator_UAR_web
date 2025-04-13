@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1206</width>
-    <height>1107</height>
+    <height>1205</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -24,7 +24,7 @@
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout" stretch="2,0,7">
       <item>
-       <layout class="QVBoxLayout" name="verticalLayout_3" stretch="1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,1">
+       <layout class="QVBoxLayout" name="verticalLayout_3" stretch="1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,1">
         <property name="topMargin">
          <number>0</number>
         </property>
@@ -3415,7 +3415,7 @@
         <item>
          <widget class="QLabel" name="label_22">
           <property name="text">
-           <string>Dane do połączenia się z serwerem</string>
+           <string>Dane do połączenia</string>
           </property>
          </widget>
         </item>
@@ -3424,12 +3424,12 @@
           <item>
            <widget class="QLabel" name="label_18">
             <property name="text">
-             <string>Adres IP</string>
+             <string>Adres IP serwera</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QTextEdit" name="textEdit">
+           <widget class="QTextEdit" name="textIP">
             <property name="maximumSize">
              <size>
               <width>16777215</width>
@@ -3450,7 +3450,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QTextEdit" name="textEdit_2">
+           <widget class="QTextEdit" name="textPort">
             <property name="maximumSize">
              <size>
               <width>16777215</width>
@@ -3465,6 +3465,13 @@
          <widget class="QPushButton" name="networkConfirm">
           <property name="text">
            <string>Zatwierdź</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="testConnect">
+          <property name="text">
+           <string>Test połączenia</string>
           </property>
          </widget>
         </item>

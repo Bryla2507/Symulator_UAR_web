@@ -1,6 +1,7 @@
 #include "gui.h"
 #include "ui_gui.h"
 
+
 GUI::GUI(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::GUI)
@@ -478,12 +479,60 @@ void GUI::on_networkConfirm_clicked()
             setHorizontalLayout(ui->horizontalLayout_12, false);
             setHorizontalLayout(ui->horizontalLayout_13, false);
             setHorizontalLayout(ui->horizontalLayout_14, false);
+
+            if(ui->textPort->toPlainText()=="")
+                ui->textPort->setText("25565");
+            if(ui->textIP->toPlainText()=="")
+                ui->textIP->setText("localhost");
+
+            clientSocket = new QTcpSocket(this);
+            clientSocket->connectToHost(ui->textIP->toPlainText(), ui->textPort->toPlainText().toInt());
+
+            connect(clientSocket, &QTcpSocket::connected, []() {
+                qDebug() << "Połączono z serwerem";
+            });
+
         }
 
         else
         {
+            if(ui->textPort->toPlainText()=="")
+                ui->textPort->setText("25565");
             setGridLayout(ui->gridLayout, false);
+            startServer();
         }
     }
+}
+
+
+void GUI::startServer() {
+    server = new QTcpServer(this);
+    if(server->listen(QHostAddress::Any, ui->textPort->toPlainText().toInt())) {
+        connect(server, &QTcpServer::newConnection, this, &GUI::newConnection);
+        qDebug() << "serwer działa";
+    } else {
+        QMessageBox::critical(this, "Błąd", "Nie można uruchomić serwera!");
+    }
+}
+
+void GUI::newConnection() {
+    serverSocket = server->nextPendingConnection();
+
+}
+
+void GUI::on_testConnect_clicked()
+{
+    if(clientSocket != nullptr)
+    {
+        qDebug() << clientSocket->peerAddress().toString();
+        qDebug() << "test klienta";
+    }
+
+    if(serverSocket != nullptr)
+    {
+        qDebug() << serverSocket->peerAddress().toString();
+        qDebug() << "test servera";
+    }
+
 }
 

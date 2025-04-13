@@ -9,6 +9,8 @@
 #include <QFileDialog>
 #include "SignalType.h"
 #include "dialog.h"
+#include <QTcpServer>
+#include <QTcpSocket>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -76,9 +78,14 @@ private slots:
 
     void on_networkConfirm_clicked();
 
+    void on_testConnect_clicked();
+
 private:
     Ui::GUI *ui;
     Dialog *m_window;
+    QTcpServer *server = nullptr;
+    QTcpSocket *serverSocket = nullptr;
+    QTcpSocket *clientSocket = nullptr;
 
     // funkcje do samych wykresów ;D
     void initCharts();
@@ -88,6 +95,11 @@ private:
     void removeExcessPoints(QLineSeries* series, int maxPoints);
     void incrementXAxis(Chart& chart);
     void adjustYAxisRange(Chart& chart);
+
+
+    void startServer();
+    void newConnection();
+
 
     std::vector<double> convertToVector(const QString& input);
 
