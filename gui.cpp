@@ -536,7 +536,7 @@ void GUI::on_testConnect_clicked()
 
         }
         else
-            QMessageBox::information(this,"Test serwera", "serwera niepodłączony");
+            QMessageBox::information(this,"Test serwera", "Serwer niepodłączony");
 
     }
     else
