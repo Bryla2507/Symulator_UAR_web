@@ -37,27 +37,28 @@ public:
     QHBoxLayout *horizontalLayout;
     QVBoxLayout *verticalLayout_3;
     QGridLayout *gridLayout_4;
-    QHBoxLayout *horizontalLayout_6;
-    QLabel *label_10;
-    QDoubleSpinBox *period;
+    QHBoxLayout *horizontalLayout_7;
+    QHBoxLayout *horizontalLayout_5;
+    QLabel *label_9;
+    QDoubleSpinBox *frequency;
+    QHBoxLayout *horizontalLayout_17;
+    QLabel *label_5;
+    QDoubleSpinBox *doubleSpinBox_2;
     QHBoxLayout *horizontalLayout_23;
     QLabel *label_7;
     QDoubleSpinBox *doubleSpinBox;
     QHBoxLayout *horizontalLayout_8;
     QLabel *label_11;
     QDoubleSpinBox *amplitude;
-    QRadioButton *jumpUnit;
+    QHBoxLayout *horizontalLayout_6;
+    QLabel *label_10;
+    QDoubleSpinBox *period;
     QLabel *label_8;
     QPushButton *setGenerator;
-    QHBoxLayout *horizontalLayout_5;
-    QLabel *label_9;
-    QDoubleSpinBox *frequency;
-    QRadioButton *sinusoidal;
-    QHBoxLayout *horizontalLayout_7;
+    QHBoxLayout *horizontalLayout_24;
     QRadioButton *rectangular;
-    QHBoxLayout *horizontalLayout_17;
-    QLabel *label_5;
-    QDoubleSpinBox *doubleSpinBox_2;
+    QRadioButton *sinusoidal;
+    QRadioButton *jumpUnit;
     QFrame *line_2;
     QGridLayout *gridLayout_3;
     QHBoxLayout *horizontalLayout_9;
@@ -95,13 +96,13 @@ public:
     QLabel *label_20;
     QListWidget *listWidgetClientServer;
     QHBoxLayout *horizontalLayout_15;
-    QLabel *label_22;
     QHBoxLayout *horizontalLayout_25;
     QLabel *label_18;
     QTextEdit *textIP;
     QHBoxLayout *horizontalLayout_26;
     QLabel *label_19;
     QTextEdit *textPort;
+    QHBoxLayout *horizontalLayout_16;
     QPushButton *networkConfirm;
     QPushButton *testConnect;
     QGridLayout *gridLayout_2;
@@ -132,7 +133,7 @@ public:
     {
         if (GUI->objectName().isEmpty())
             GUI->setObjectName("GUI");
-        GUI->resize(1206, 1205);
+        GUI->resize(1220, 1127);
         QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Preferred);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -142,6 +143,7 @@ public:
         centralwidget->setObjectName("centralwidget");
         horizontalLayout_2 = new QHBoxLayout(centralwidget);
         horizontalLayout_2->setObjectName("horizontalLayout_2");
+        horizontalLayout_2->setSizeConstraint(QLayout::SetDefaultConstraint);
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName("horizontalLayout");
         verticalLayout_3 = new QVBoxLayout();
@@ -149,30 +151,53 @@ public:
         verticalLayout_3->setContentsMargins(-1, 0, 0, 0);
         gridLayout_4 = new QGridLayout();
         gridLayout_4->setObjectName("gridLayout_4");
-        horizontalLayout_6 = new QHBoxLayout();
-        horizontalLayout_6->setObjectName("horizontalLayout_6");
-        label_10 = new QLabel(centralwidget);
-        label_10->setObjectName("label_10");
+        horizontalLayout_7 = new QHBoxLayout();
+        horizontalLayout_7->setObjectName("horizontalLayout_7");
+
+        gridLayout_4->addLayout(horizontalLayout_7, 2, 0, 1, 1);
+
+        horizontalLayout_5 = new QHBoxLayout();
+        horizontalLayout_5->setObjectName("horizontalLayout_5");
+        label_9 = new QLabel(centralwidget);
+        label_9->setObjectName("label_9");
         QSizePolicy sizePolicy1(QSizePolicy::Expanding, QSizePolicy::Fixed);
         sizePolicy1.setHorizontalStretch(0);
         sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(label_10->sizePolicy().hasHeightForWidth());
-        label_10->setSizePolicy(sizePolicy1);
+        sizePolicy1.setHeightForWidth(label_9->sizePolicy().hasHeightForWidth());
+        label_9->setSizePolicy(sizePolicy1);
 
-        horizontalLayout_6->addWidget(label_10);
+        horizontalLayout_5->addWidget(label_9);
 
-        period = new QDoubleSpinBox(centralwidget);
-        period->setObjectName("period");
-        sizePolicy1.setHeightForWidth(period->sizePolicy().hasHeightForWidth());
-        period->setSizePolicy(sizePolicy1);
-        period->setMaximum(10000.000000000000000);
-        period->setSingleStep(0.100000000000000);
-        period->setValue(4.000000000000000);
+        frequency = new QDoubleSpinBox(centralwidget);
+        frequency->setObjectName("frequency");
+        sizePolicy1.setHeightForWidth(frequency->sizePolicy().hasHeightForWidth());
+        frequency->setSizePolicy(sizePolicy1);
+        frequency->setDecimals(2);
+        frequency->setMaximum(10000.000000000000000);
+        frequency->setSingleStep(0.100000000000000);
+        frequency->setValue(1.000000000000000);
 
-        horizontalLayout_6->addWidget(period);
+        horizontalLayout_5->addWidget(frequency);
 
 
-        gridLayout_4->addLayout(horizontalLayout_6, 9, 0, 1, 1);
+        gridLayout_4->addLayout(horizontalLayout_5, 11, 0, 1, 1);
+
+        horizontalLayout_17 = new QHBoxLayout();
+        horizontalLayout_17->setObjectName("horizontalLayout_17");
+        label_5 = new QLabel(centralwidget);
+        label_5->setObjectName("label_5");
+
+        horizontalLayout_17->addWidget(label_5);
+
+        doubleSpinBox_2 = new QDoubleSpinBox(centralwidget);
+        doubleSpinBox_2->setObjectName("doubleSpinBox_2");
+        doubleSpinBox_2->setMinimum(-100.000000000000000);
+        doubleSpinBox_2->setSingleStep(0.010000000000000);
+
+        horizontalLayout_17->addWidget(doubleSpinBox_2);
+
+
+        gridLayout_4->addLayout(horizontalLayout_17, 13, 0, 1, 1);
 
         horizontalLayout_23 = new QHBoxLayout();
         horizontalLayout_23->setObjectName("horizontalLayout_23");
@@ -190,7 +215,7 @@ public:
         horizontalLayout_23->addWidget(doubleSpinBox);
 
 
-        gridLayout_4->addLayout(horizontalLayout_23, 11, 0, 1, 1);
+        gridLayout_4->addLayout(horizontalLayout_23, 12, 0, 1, 1);
 
         horizontalLayout_8 = new QHBoxLayout();
         horizontalLayout_8->setObjectName("horizontalLayout_8");
@@ -213,14 +238,29 @@ public:
         horizontalLayout_8->addWidget(amplitude);
 
 
-        gridLayout_4->addLayout(horizontalLayout_8, 8, 0, 1, 1);
+        gridLayout_4->addLayout(horizontalLayout_8, 9, 0, 1, 1);
 
-        jumpUnit = new QRadioButton(centralwidget);
-        jumpUnit->setObjectName("jumpUnit");
-        sizePolicy1.setHeightForWidth(jumpUnit->sizePolicy().hasHeightForWidth());
-        jumpUnit->setSizePolicy(sizePolicy1);
+        horizontalLayout_6 = new QHBoxLayout();
+        horizontalLayout_6->setObjectName("horizontalLayout_6");
+        label_10 = new QLabel(centralwidget);
+        label_10->setObjectName("label_10");
+        sizePolicy1.setHeightForWidth(label_10->sizePolicy().hasHeightForWidth());
+        label_10->setSizePolicy(sizePolicy1);
 
-        gridLayout_4->addWidget(jumpUnit, 6, 0, 1, 1);
+        horizontalLayout_6->addWidget(label_10);
+
+        period = new QDoubleSpinBox(centralwidget);
+        period->setObjectName("period");
+        sizePolicy1.setHeightForWidth(period->sizePolicy().hasHeightForWidth());
+        period->setSizePolicy(sizePolicy1);
+        period->setMaximum(10000.000000000000000);
+        period->setSingleStep(0.100000000000000);
+        period->setValue(4.000000000000000);
+
+        horizontalLayout_6->addWidget(period);
+
+
+        gridLayout_4->addLayout(horizontalLayout_6, 10, 0, 1, 1);
 
         label_8 = new QLabel(centralwidget);
         label_8->setObjectName("label_8");
@@ -374,67 +414,34 @@ public:
 #endif
         setGenerator->setPalette(palette1);
 
-        gridLayout_4->addWidget(setGenerator, 13, 0, 1, 1);
+        gridLayout_4->addWidget(setGenerator, 14, 0, 1, 1);
 
-        horizontalLayout_5 = new QHBoxLayout();
-        horizontalLayout_5->setObjectName("horizontalLayout_5");
-        label_9 = new QLabel(centralwidget);
-        label_9->setObjectName("label_9");
-        sizePolicy1.setHeightForWidth(label_9->sizePolicy().hasHeightForWidth());
-        label_9->setSizePolicy(sizePolicy1);
-
-        horizontalLayout_5->addWidget(label_9);
-
-        frequency = new QDoubleSpinBox(centralwidget);
-        frequency->setObjectName("frequency");
-        sizePolicy1.setHeightForWidth(frequency->sizePolicy().hasHeightForWidth());
-        frequency->setSizePolicy(sizePolicy1);
-        frequency->setDecimals(2);
-        frequency->setMaximum(10000.000000000000000);
-        frequency->setSingleStep(0.100000000000000);
-        frequency->setValue(1.000000000000000);
-
-        horizontalLayout_5->addWidget(frequency);
-
-
-        gridLayout_4->addLayout(horizontalLayout_5, 10, 0, 1, 1);
-
-        sinusoidal = new QRadioButton(centralwidget);
-        sinusoidal->setObjectName("sinusoidal");
-        sizePolicy1.setHeightForWidth(sinusoidal->sizePolicy().hasHeightForWidth());
-        sinusoidal->setSizePolicy(sizePolicy1);
-
-        gridLayout_4->addWidget(sinusoidal, 4, 0, 1, 1);
-
-        horizontalLayout_7 = new QHBoxLayout();
-        horizontalLayout_7->setObjectName("horizontalLayout_7");
-
-        gridLayout_4->addLayout(horizontalLayout_7, 2, 0, 1, 1);
-
+        horizontalLayout_24 = new QHBoxLayout();
+        horizontalLayout_24->setObjectName("horizontalLayout_24");
         rectangular = new QRadioButton(centralwidget);
         rectangular->setObjectName("rectangular");
         sizePolicy1.setHeightForWidth(rectangular->sizePolicy().hasHeightForWidth());
         rectangular->setSizePolicy(sizePolicy1);
         rectangular->setChecked(true);
 
-        gridLayout_4->addWidget(rectangular, 5, 0, 1, 1);
+        horizontalLayout_24->addWidget(rectangular);
 
-        horizontalLayout_17 = new QHBoxLayout();
-        horizontalLayout_17->setObjectName("horizontalLayout_17");
-        label_5 = new QLabel(centralwidget);
-        label_5->setObjectName("label_5");
+        sinusoidal = new QRadioButton(centralwidget);
+        sinusoidal->setObjectName("sinusoidal");
+        sizePolicy1.setHeightForWidth(sinusoidal->sizePolicy().hasHeightForWidth());
+        sinusoidal->setSizePolicy(sizePolicy1);
 
-        horizontalLayout_17->addWidget(label_5);
+        horizontalLayout_24->addWidget(sinusoidal);
 
-        doubleSpinBox_2 = new QDoubleSpinBox(centralwidget);
-        doubleSpinBox_2->setObjectName("doubleSpinBox_2");
-        doubleSpinBox_2->setMinimum(-100.000000000000000);
-        doubleSpinBox_2->setSingleStep(0.010000000000000);
+        jumpUnit = new QRadioButton(centralwidget);
+        jumpUnit->setObjectName("jumpUnit");
+        sizePolicy1.setHeightForWidth(jumpUnit->sizePolicy().hasHeightForWidth());
+        jumpUnit->setSizePolicy(sizePolicy1);
 
-        horizontalLayout_17->addWidget(doubleSpinBox_2);
+        horizontalLayout_24->addWidget(jumpUnit);
 
 
-        gridLayout_4->addLayout(horizontalLayout_17, 12, 0, 1, 1);
+        gridLayout_4->addLayout(horizontalLayout_24, 4, 0, 1, 1);
 
 
         verticalLayout_3->addLayout(gridLayout_4);
@@ -931,11 +938,6 @@ public:
 
         verticalLayout_3->addLayout(horizontalLayout_15);
 
-        label_22 = new QLabel(centralwidget);
-        label_22->setObjectName("label_22");
-
-        verticalLayout_3->addWidget(label_22);
-
         horizontalLayout_25 = new QHBoxLayout();
         horizontalLayout_25->setObjectName("horizontalLayout_25");
         label_18 = new QLabel(centralwidget);
@@ -945,7 +947,7 @@ public:
 
         textIP = new QTextEdit(centralwidget);
         textIP->setObjectName("textIP");
-        textIP->setMaximumSize(QSize(16777215, 30));
+        textIP->setMaximumSize(QSize(16777215, 28));
 
         horizontalLayout_25->addWidget(textIP);
 
@@ -961,22 +963,27 @@ public:
 
         textPort = new QTextEdit(centralwidget);
         textPort->setObjectName("textPort");
-        textPort->setMaximumSize(QSize(16777215, 30));
+        textPort->setMaximumSize(QSize(16777215, 28));
 
         horizontalLayout_26->addWidget(textPort);
 
 
         verticalLayout_3->addLayout(horizontalLayout_26);
 
+        horizontalLayout_16 = new QHBoxLayout();
+        horizontalLayout_16->setObjectName("horizontalLayout_16");
         networkConfirm = new QPushButton(centralwidget);
         networkConfirm->setObjectName("networkConfirm");
 
-        verticalLayout_3->addWidget(networkConfirm);
+        horizontalLayout_16->addWidget(networkConfirm);
 
         testConnect = new QPushButton(centralwidget);
         testConnect->setObjectName("testConnect");
 
-        verticalLayout_3->addWidget(testConnect);
+        horizontalLayout_16->addWidget(testConnect);
+
+
+        verticalLayout_3->addLayout(horizontalLayout_16);
 
         gridLayout_2 = new QGridLayout();
         gridLayout_2->setObjectName("gridLayout_2");
@@ -1471,7 +1478,7 @@ public:
         verticalLayout_3->setStretch(3, 1);
         verticalLayout_3->setStretch(4, 1);
         verticalLayout_3->setStretch(5, 1);
-        verticalLayout_3->setStretch(16, 1);
+        verticalLayout_3->setStretch(14, 1);
 
         horizontalLayout->addLayout(verticalLayout_3);
 
@@ -1508,7 +1515,7 @@ public:
         GUI->setCentralWidget(centralwidget);
         menubar = new QMenuBar(GUI);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 1206, 21));
+        menubar->setGeometry(QRect(0, 0, 1220, 21));
         GUI->setMenuBar(menubar);
         statusbar = new QStatusBar(GUI);
         statusbar->setObjectName("statusbar");
@@ -1525,16 +1532,16 @@ public:
     void retranslateUi(QMainWindow *GUI)
     {
         GUI->setWindowTitle(QCoreApplication::translate("GUI", "GUI", nullptr));
-        label_10->setText(QCoreApplication::translate("GUI", "Okres:", nullptr));
+        label_9->setText(QCoreApplication::translate("GUI", "Cz\304\231stotliwo\305\233\304\207 (dla sin.):", nullptr));
+        label_5->setText(QCoreApplication::translate("GUI", "Sta\305\202a sk\305\202adowa:", nullptr));
         label_7->setText(QCoreApplication::translate("GUI", "Wype\305\202nienie (dla prost.):", nullptr));
         label_11->setText(QCoreApplication::translate("GUI", "Amplituda:", nullptr));
-        jumpUnit->setText(QCoreApplication::translate("GUI", "Skok jednostkowy", nullptr));
+        label_10->setText(QCoreApplication::translate("GUI", "Okres:", nullptr));
         label_8->setText(QCoreApplication::translate("GUI", "GENERATOR", nullptr));
         setGenerator->setText(QCoreApplication::translate("GUI", "Zatwierd\305\272 parametry", nullptr));
-        label_9->setText(QCoreApplication::translate("GUI", "Cz\304\231stotliwo\305\233\304\207 (dla sin.):", nullptr));
-        sinusoidal->setText(QCoreApplication::translate("GUI", "Sinusoidalny", nullptr));
         rectangular->setText(QCoreApplication::translate("GUI", "Prostok\304\205tny", nullptr));
-        label_5->setText(QCoreApplication::translate("GUI", "Sta\305\202a sk\305\202adowa:", nullptr));
+        sinusoidal->setText(QCoreApplication::translate("GUI", "Sinusoidalny", nullptr));
+        jumpUnit->setText(QCoreApplication::translate("GUI", "Skok jednostkowy", nullptr));
         label_14->setText(QCoreApplication::translate("GUI", "Nastawa tI:", nullptr));
         label_17->setText(QCoreApplication::translate("GUI", "Reset pami\304\231ci:", nullptr));
         reset_Integral->setText(QCoreApplication::translate("GUI", "Ca\305\202kuj\304\205cej", nullptr));
@@ -1562,7 +1569,6 @@ public:
         ___qlistwidgetitem1->setText(QCoreApplication::translate("GUI", "Klient ARX", nullptr));
         listWidgetClientServer->setSortingEnabled(__sortingEnabled);
 
-        label_22->setText(QCoreApplication::translate("GUI", "Dane do po\305\202\304\205czenia", nullptr));
         label_18->setText(QCoreApplication::translate("GUI", "Adres IP serwera", nullptr));
         label_19->setText(QCoreApplication::translate("GUI", "Port", nullptr));
         networkConfirm->setText(QCoreApplication::translate("GUI", "Zatwierd\305\272", nullptr));

@@ -29,14 +29,14 @@ GUI::GUI(QWidget *parent)
     }
 
     /* ZIELONY TEKST DLA OKREŚLONYCH LABELI */
-    #label, #label_2, #label_3, #label_8, #label_B, #label_Z {
+    #label, #label_2, #label_3, #label_8, #label_B, #label_Z, #label_6{
         color: rgb(0, 255, 0); /* Jasnozielony */
         font-weight: bold;
         border: 1px solid rgb(0, 128, 0);
         font-size: 12pt;
     }
 
-    #setRegulator, #setModel, #setLoop, #setGenerator
+    #setRegulator, #setModel, #setLoop, #setGenerator, #networkConfirm, #testConnect
     {
         background-color:  rgb(0, 128, 0);
     }
@@ -528,15 +528,34 @@ void GUI::on_testConnect_clicked()
 {
     if(clientSocket != nullptr)
     {
-        qDebug() << clientSocket->peerAddress().toString();
-        qDebug() << "test klienta";
+        if(clientSocket->peerAddress().toString() != "")
+        {
+            QMessageBox::information(this,"Test serwera", "Adres serwera: " + clientSocket->peerAddress().toString());
+            qDebug() << clientSocket->peerAddress().toString();
+            qDebug() << "test serwera";
+
+        }
+        else
+            QMessageBox::information(this,"Test serwera", "serwera niepodłączony");
+
     }
+    else
+        QMessageBox::information(this,"Test serwera", "Serwer niepodłączony");
 
     if(serverSocket != nullptr)
     {
-        qDebug() << serverSocket->peerAddress().toString();
-        qDebug() << "test servera";
+        if(serverSocket->peerAddress().toString() != "")
+        {
+            QMessageBox::information(this,"Test klienta", "Adres klienta: " + serverSocket->peerAddress().toString());
+            qDebug() << serverSocket->peerAddress().toString();
+            qDebug() << "test klienta";
+        }
+        else
+            QMessageBox::information(this,"Test klienta", "Klient niepodłączony");
+
     }
+    else
+        QMessageBox::information(this,"Test klienta", "Klient niepodłączony");
 
 }
 
