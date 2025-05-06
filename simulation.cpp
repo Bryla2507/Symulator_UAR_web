@@ -46,4 +46,8 @@ void Simulation::connectBackendFrontend()
     QObject::connect(&gui, &GUI::saveSimulation, &fileManager, &FileManager::saveInstance);
     QObject::connect(&gui, &GUI::loadSimulation, &fileManager, &FileManager::loadInstance);
     QObject::connect(&loop, &LoopSystem::updateGUIControls, &gui, &GUI::updateGUIControls);
+
+
+    QObject::connect(&gui, &GUI::startServerRequest, &loop, &LoopSystem::startServer);
+
 }

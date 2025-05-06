@@ -503,26 +503,30 @@ void GUI::on_networkConfirm_clicked()
             if(ui->textPort->toPlainText()=="")
                 ui->textPort->setText("25565");
             setGridLayout(ui->gridLayout, false);
-            startServer();
+
+
+            QString portText = ui->textIP->toPlainText();  // bo to QTextEdit
+            quint16 port = portText.toUShort();
+            emit startServerRequest(port);
         }
     }
 }
 
 
-void GUI::startServer() {
-    server = new QTcpServer(this);
-    if(server->listen(QHostAddress::Any, ui->textPort->toPlainText().toInt())) {
-        connect(server, &QTcpServer::newConnection, this, &GUI::newConnection);
-        qDebug() << "serwer działa";
-    } else {
-        QMessageBox::critical(this, "Błąd", "Nie można uruchomić serwera!");
-    }
-}
+// void GUI::startServer() {
+//     server = new QTcpServer(this);
+//     if(server->listen(QHostAddress::Any, ui->textPort->toPlainText().toInt())) {
+//         connect(server, &QTcpServer::newConnection, this, &GUI::newConnection);
+//         qDebug() << "serwer działa";
+//     } else {
+//         QMessageBox::critical(this, "Błąd", "Nie można uruchomić serwera!");
+//     }
+// }
 
-void GUI::newConnection() {
-    serverSocket = server->nextPendingConnection();
+// void GUI::newConnection() {
+//     serverSocket = server->nextPendingConnection();
 
-}
+// }
 
 void GUI::on_testConnect_clicked()
 {

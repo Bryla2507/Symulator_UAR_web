@@ -65,3 +65,25 @@ void LoopSystem::connectLoopSignals()
 {
     connect(loopTimer,&QTimer::timeout,this,&LoopSystem::executeLoop);
 }
+
+void LoopSystem::startServer(quint16 port)
+{
+    if (!server) {
+        server = new QTcpServer(this);
+        connect(server, &QTcpServer::newConnection, this, &LoopSystem::newConnection);
+    }
+
+    if (!server->isListening()) {
+        if (!server->listen(QHostAddress::Any, port)) {
+            qDebug() << "Server could not start!";
+        } else {
+            qDebug() << "Server started on port" << port;
+        }
+    }
+}
+
+void LoopSystem::newConnection()
+{
+    serverSocket = server->nextPendingConnection();
+    qDebug() << "New connection established!";
+}

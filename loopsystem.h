@@ -6,10 +6,14 @@
 #include "generator.h"
 #include "pid_regulator.h"
 #include "arx_model.h"
+#include <QTcpServer>
+#include <QTcpSocket>
 
 class LoopSystem : public QObject
 {
     Q_OBJECT
+    QTcpServer *server = nullptr;
+    QTcpSocket *serverSocket = nullptr;
 public:
     LoopSystem(QObject *parent = nullptr);
 
@@ -27,6 +31,7 @@ public:
 
 public slots:
     void executeLoop();
+    void startServer(quint16 port);  // np. domyślnie port 1234
 
 signals:
     void updateGUIControls(SignalType s, double a, double per, double f, double p, double i,
@@ -35,6 +40,7 @@ signals:
 
 private:
     void init();
+    void newConnection();
 
     // funkcje pętli sprzężenia zwrotnego
     void connectLoopSignals();

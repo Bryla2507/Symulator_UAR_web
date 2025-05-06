@@ -58,6 +58,8 @@ signals:
     void saveSimulation(QString filePath);
     void loadSimulation(QString filePath);
 
+    void startServerRequest(quint16 port);
+
 private slots:
     void on_setGenerator_clicked();
     void on_setRegulator_clicked();
@@ -97,7 +99,7 @@ private:
     void adjustYAxisRange(Chart& chart);
 
 
-    void startServer();
+   // void startServer();
     void newConnection();
 
 
