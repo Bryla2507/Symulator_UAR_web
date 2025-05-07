@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1220</width>
-    <height>1127</height>
+    <height>1288</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -22,7 +22,7 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout_2">
     <property name="sizeConstraint">
-     <enum>QLayout::SetDefaultConstraint</enum>
+     <enum>QLayout::SizeConstraint::SetDefaultConstraint</enum>
     </property>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout" stretch="2,0,7">
@@ -666,16 +666,16 @@
              <bool>false</bool>
             </property>
             <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
+             <enum>QFrame::Shape::StyledPanel</enum>
             </property>
             <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
+             <enum>QFrame::Shadow::Raised</enum>
             </property>
             <property name="text">
              <string>GENERATOR</string>
             </property>
             <property name="alignment">
-             <set>Qt::AlignCenter</set>
+             <set>Qt::AlignmentFlag::AlignCenter</set>
             </property>
            </widget>
           </item>
@@ -1191,7 +1191,7 @@
            </sizepolicy>
           </property>
           <property name="orientation">
-           <enum>Qt::Horizontal</enum>
+           <enum>Qt::Orientation::Horizontal</enum>
           </property>
          </widget>
         </item>
@@ -2359,16 +2359,16 @@
              </font>
             </property>
             <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
+             <enum>QFrame::Shape::StyledPanel</enum>
             </property>
             <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
+             <enum>QFrame::Shadow::Raised</enum>
             </property>
             <property name="text">
              <string>REGULATOR PID</string>
             </property>
             <property name="alignment">
-             <set>Qt::AlignCenter</set>
+             <set>Qt::AlignmentFlag::AlignCenter</set>
             </property>
            </widget>
           </item>
@@ -2390,7 +2390,7 @@
            </sizepolicy>
           </property>
           <property name="orientation">
-           <enum>Qt::Horizontal</enum>
+           <enum>Qt::Orientation::Horizontal</enum>
           </property>
          </widget>
         </item>
@@ -2864,16 +2864,16 @@
              </font>
             </property>
             <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
+             <enum>QFrame::Shape::StyledPanel</enum>
             </property>
             <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
+             <enum>QFrame::Shadow::Raised</enum>
             </property>
             <property name="text">
              <string>MODEL ARX</string>
             </property>
             <property name="alignment">
-             <set>Qt::AlignCenter</set>
+             <set>Qt::AlignmentFlag::AlignCenter</set>
             </property>
            </widget>
           </item>
@@ -3343,7 +3343,7 @@
            </sizepolicy>
           </property>
           <property name="orientation">
-           <enum>Qt::Horizontal</enum>
+           <enum>Qt::Orientation::Horizontal</enum>
           </property>
          </widget>
         </item>
@@ -3355,13 +3355,13 @@
            </font>
           </property>
           <property name="layoutDirection">
-           <enum>Qt::LeftToRight</enum>
+           <enum>Qt::LayoutDirection::LeftToRight</enum>
           </property>
           <property name="text">
            <string>USTAWIENIA PRACY SIECIOWEJ I LOKALNEJ</string>
           </property>
           <property name="alignment">
-           <set>Qt::AlignCenter</set>
+           <set>Qt::AlignmentFlag::AlignCenter</set>
           </property>
          </widget>
         </item>
@@ -4443,16 +4443,16 @@
              </font>
             </property>
             <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
+             <enum>QFrame::Shape::StyledPanel</enum>
             </property>
             <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
+             <enum>QFrame::Shadow::Raised</enum>
             </property>
             <property name="text">
              <string>SYMULACJA</string>
             </property>
             <property name="alignment">
-             <set>Qt::AlignCenter</set>
+             <set>Qt::AlignmentFlag::AlignCenter</set>
             </property>
            </widget>
           </item>
@@ -6326,7 +6326,7 @@
          <number>2</number>
         </property>
         <property name="orientation">
-         <enum>Qt::Vertical</enum>
+         <enum>Qt::Orientation::Vertical</enum>
         </property>
        </widget>
       </item>
@@ -6350,7 +6350,7 @@
      <x>0</x>
      <y>0</y>
      <width>1220</width>
-     <height>21</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>

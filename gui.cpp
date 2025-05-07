@@ -8,7 +8,18 @@ GUI::GUI(QWidget *parent)
 {
     ui->setupUi(this);
 
+
+
+    connectionIndicator = new QLabel("");
+    connectionIndicator->setFixedWidth(25);
+    ui->statusbar->addPermanentWidget(connectionIndicator, 0);
+    connectionIndicator->setAutoFillBackground(true);
+    connectionIndicator->setObjectName("connectionIndicator");
+
+
     initCharts();
+
+
 
     interval = 0.02; // poczatkowo
 
@@ -24,9 +35,8 @@ GUI::GUI(QWidget *parent)
         background-color: rgb(20, 20, 20);
     }
 
-    QLabel {
-        color: white;
-    }
+
+
 
     /* ZIELONY TEKST DLA OKREŚLONYCH LABELI */
     #label, #label_2, #label_3, #label_8, #label_B, #label_Z, #label_6{
@@ -174,6 +184,8 @@ void GUI::initCharts() {
 
     charts["Składowe PID"].series[1]->setVisible(false);
     charts["Składowe PID"].series[2]->setVisible(false);
+
+
 }
 
 void GUI::configureChart(QChart* chart,const QString xLabel,const QString yLabel) {
@@ -497,7 +509,7 @@ void GUI::on_networkConfirm_clicked()
             connect(clientSocket, &QTcpSocket::connected, []() {
                 qDebug() << "Połączono z serwerem";
             });
-
+            ui->statusbar->showMessage("Używany adres serwera: " + ui->textIP->toPlainText() + "   Port: " + ui->textPort->toPlainText());
         }
 
         else
@@ -510,8 +522,10 @@ void GUI::on_networkConfirm_clicked()
             QString portText = ui->textPort->toPlainText();  // bo to QTextEdit
             int port = portText.toInt();
             emit startServerRequest(port);
+            ui->statusbar->showMessage("Port użyty przy uruchomieniu serwera: " + ui->textPort->toPlainText());
         }
     }
+
 }
 
 
@@ -519,6 +533,27 @@ void GUI::on_testConnect_clicked(){
     emit testConnectionRequest();
 }
 
+void GUI::setGreenLight()
+{
+    connectionIndicator->setStyleSheet(
+        "QLabel#connectionIndicator { background-color: rgb(0, 255, 0); }"
+        );
+    qDebug() << "zmiana koloru";
+    QPalette zielony = connectionIndicator->palette();
+    zielony.setColor(QPalette::Window, QColor(Qt::green));
+    connectionIndicator->setPalette(zielony);
+}
+
+void GUI::setRedLight()
+{
+    connectionIndicator->setStyleSheet(
+        "QLabel#connectionIndicator { background-color: rgb(255, 0, 0); }"
+        );
+    qDebug() << "zmiana koloru";
+    QPalette czerwony = connectionIndicator->palette();
+    czerwony.setColor(QPalette::Window, QColor(Qt::red));
+    connectionIndicator->setPalette(czerwony);
+}
 
 
 // void GUI::startServer() {

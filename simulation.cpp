@@ -55,5 +55,6 @@ void Simulation::connectBackendFrontend()
     QObject::connect(&gui, &GUI::clientSocketCreated, &loop, &LoopSystem::setClientSocket);
     QObject::connect(&gui, &GUI::resetConnection, &loop, &LoopSystem::resetConnection);
 
-
+    QObject::connect(&loop, &LoopSystem::setGreenLight, &gui, &GUI::setGreenLight);
+    QObject::connect(&loop, &LoopSystem::setRedLight, &gui, &GUI::setRedLight);
 }

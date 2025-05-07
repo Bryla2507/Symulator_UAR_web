@@ -67,7 +67,7 @@ void LoopSystem::executeLoop()
             int bytesAvailable = serverSocket->bytesAvailable();
             if(bytesAvailable >= sizeof(double))
             {
-                //set LampkaZielona
+                emit setGreenLight();
                 qDebug() << "serwer ma dostępne dane";
                 int bytesToSkip = bytesAvailable - sizeof(double);
 
@@ -81,10 +81,7 @@ void LoopSystem::executeLoop()
                 qDebug() << "[Server] Otrzymano od klienta:" << receivedValue;
                 objectValue = receivedValue;
             }
-            else
-            {
-                //set LampkaCzerwona
-            }
+
             // odbieranie danych z klienta na serwerze
 
 
@@ -100,6 +97,10 @@ void LoopSystem::executeLoop()
                 wantedValue = receivedValue;
             }
             */
+        }
+        else
+        {
+            emit setRedLight();
         }
 
         wantedValue = generator.simulate(loopInterval);
@@ -195,6 +196,7 @@ void LoopSystem::newConnection()
 {
     serverSocket = server->nextPendingConnection();
     qDebug() << "New connection established!";
+
 }
 
 void LoopSystem::testConnection()
