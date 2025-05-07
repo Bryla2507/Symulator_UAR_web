@@ -30,7 +30,7 @@ public:
 
 public slots:
     void executeLoop();
-    void startServer(quint16 port);
+    void startServer(int port);
     void testConnection();
     void setClientSocket(QTcpSocket* socket);
 

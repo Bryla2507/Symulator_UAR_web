@@ -47,9 +47,15 @@ ARX_Model &LoopSystem::getObject()
 
 void LoopSystem::executeLoop()
 {
+    // serverSocket trzyma dane o kliencie w instancji serwera
+    // clientSocket trzyma dane o serwerze w instancji klienta
+    // serverSocket powinien wysyłać dane z regulatora, a odbierać z obiektu
+    // clientSocket powinien wysyłać dane z obiektu, a odbierać z regulatora
     if (server && server->isListening() && serverSocket && serverSocket->state() == QAbstractSocket::ConnectedState) {
         // Serwer
+        qDebug() << "serwer czeka na dane";
         if (serverSocket->bytesAvailable()) {
+            qDebug() << "serwer ma dostępne dane";
             QByteArray data = serverSocket->readAll();
             QString str = QString::fromUtf8(data).trimmed();
             bool ok = false;
@@ -62,7 +68,9 @@ void LoopSystem::executeLoop()
 
     } else if (clientSocket && clientSocket->state() == QAbstractSocket::ConnectedState) {
         // Klient
+        qDebug() << "klient czeka na dane";
         if (clientSocket->bytesAvailable()) {
+            qDebug() << "klient ma dostępne dane";
             QByteArray data = clientSocket->readAll();
             QString str = QString::fromUtf8(data).trimmed();
             bool ok = false;
@@ -94,8 +102,9 @@ void LoopSystem::connectLoopSignals()
     connect(loopTimer,&QTimer::timeout,this,&LoopSystem::executeLoop);
 }
 
-void LoopSystem::startServer(quint16 port)
+void LoopSystem::startServer(int port)
 {
+    port = 25565; //temporary
     if (!server) {
         server = new QTcpServer(this);
         connect(server, &QTcpServer::newConnection, this, &LoopSystem::newConnection);
@@ -144,6 +153,9 @@ void LoopSystem::testConnection()
 void LoopSystem::setClientSocket(QTcpSocket* socket)
 {
     this->clientSocket = socket;
+    connect(clientSocket, &QTcpSocket::connected, []() {
+        qDebug() << "Połączono z serwerem";
+    });
 }
 
 

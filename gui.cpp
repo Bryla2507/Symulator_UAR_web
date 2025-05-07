@@ -506,7 +506,7 @@ void GUI::on_networkConfirm_clicked()
 
 
             QString portText = ui->textIP->toPlainText();  // bo to QTextEdit
-            quint16 port = portText.toUShort();
+            int port = portText.toInt();
             emit startServerRequest(port);
         }
     }
