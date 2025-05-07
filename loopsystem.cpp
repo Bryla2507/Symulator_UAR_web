@@ -80,14 +80,10 @@ void LoopSystem::executeLoop()
                 qDebug() << "[Server] Otrzymano od klienta:" << receivedValue;
                 objectValue = receivedValue;
             }
-            // odbieranie danych z serwera na kliencie
+            // odbieranie danych z klienta na serwerze
 
 
-            wantedValue = generator.simulate(loopInterval);
-            deviation = wantedValue - objectValue;
-            PID_ResponseValue = regulator.simulate(deviation);
 
-            emit sendObjectValueToChart(objectValue);
             /*
             qDebug() << "serwer ma dostępne dane";
             QByteArray data = serverSocket->readAll();
@@ -100,6 +96,12 @@ void LoopSystem::executeLoop()
             }
             */
         }
+
+        wantedValue = generator.simulate(loopInterval);
+        deviation = wantedValue - objectValue;
+        PID_ResponseValue = regulator.simulate(deviation);
+
+        emit sendObjectValueToChart(objectValue);
 
     } else if (clientSocket && clientSocket->state() == QAbstractSocket::ConnectedState) {
         // Klient
@@ -126,12 +128,14 @@ void LoopSystem::executeLoop()
                 qDebug() << "[Client] Otrzymano od serwera:" << receivedValue;
                 PID_ResponseValue = receivedValue;
 
+                objectValue = object.simulate(PID_ResponseValue);
+
             }
 
             // odbieranie danych z serwera na kliencie
 
 
-            objectValue = object.simulate(PID_ResponseValue);
+
 
             //QByteArray data = clientSocket->readAll();
             //QString str = QString::fromUtf8(data).trimmed();
