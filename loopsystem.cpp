@@ -67,6 +67,7 @@ void LoopSystem::executeLoop()
             int bytesAvailable = serverSocket->bytesAvailable();
             if(bytesAvailable >= sizeof(double))
             {
+                //set LampkaZielona
                 qDebug() << "serwer ma dostępne dane";
                 int bytesToSkip = bytesAvailable - sizeof(double);
 
@@ -79,6 +80,10 @@ void LoopSystem::executeLoop()
                 in >> receivedValue;
                 qDebug() << "[Server] Otrzymano od klienta:" << receivedValue;
                 objectValue = receivedValue;
+            }
+            else
+            {
+                //set LampkaCzerwona
             }
             // odbieranie danych z klienta na serwerze
 
@@ -105,6 +110,7 @@ void LoopSystem::executeLoop()
 
     } else if (clientSocket && clientSocket->state() == QAbstractSocket::ConnectedState) {
         // Klient
+
         QByteArray block;
         QDataStream out(&block, QIODevice::WriteOnly);
         out << objectValue;
