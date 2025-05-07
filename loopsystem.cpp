@@ -53,8 +53,30 @@ void LoopSystem::executeLoop()
     // clientSocket powinien wysyłać dane z obiektu, a odbierać z regulatora
     if (server && server->isListening() && serverSocket && serverSocket->state() == QAbstractSocket::ConnectedState) {
         // Serwer
+
+        // block odpowiedzialny za wysłanie danych z regulatora
+        QByteArray block;
+        QDataStream out(&block, QIODevice::WriteOnly);
+        out << PID_ResponseValue;
+        serverSocket->write(block);
+
+
         qDebug() << "serwer czeka na dane";
         if (serverSocket->bytesAvailable()) {
+
+            // odbieranie danych z serwera na kliencie
+            qDebug() << "serwer ma dostępne dane";
+            QDataStream in;
+            in.setDevice(serverSocket);
+            double receivedValue;
+            in >> receivedValue;
+            qDebug() << "[Server] Otrzymano od klienta:" << receivedValue;
+            objectValue = receivedValue;
+
+            wantedValue = generator.simulate(loopInterval);
+            deviation = wantedValue - objectValue;
+            PID_ResponseValue = regulator.simulate(deviation);
+            /*
             qDebug() << "serwer ma dostępne dane";
             QByteArray data = serverSocket->readAll();
             QString str = QString::fromUtf8(data).trimmed();
@@ -64,21 +86,38 @@ void LoopSystem::executeLoop()
                 qDebug() << "[Server] Otrzymano od klienta:" << receivedValue;
                 wantedValue = receivedValue;
             }
+            */
         }
 
     } else if (clientSocket && clientSocket->state() == QAbstractSocket::ConnectedState) {
         // Klient
+        QByteArray block;
+        QDataStream out(&block, QIODevice::WriteOnly);
+        out << objectValue;
+        clientSocket->write(block);
+
         qDebug() << "klient czeka na dane";
         if (clientSocket->bytesAvailable()) {
+
+            // odbieranie danych z serwera na kliencie
             qDebug() << "klient ma dostępne dane";
-            QByteArray data = clientSocket->readAll();
-            QString str = QString::fromUtf8(data).trimmed();
-            bool ok = false;
-            double receivedValue = str.toDouble(&ok);
-            if (ok) {
-                qDebug() << "[Client] Otrzymano od serwera:" << receivedValue;
-                wantedValue = receivedValue;
-            }
+            QDataStream in;
+            in.setDevice(clientSocket);
+            double receivedValue;
+            in >> receivedValue;
+            qDebug() << "[Client] Otrzymano od serwera:" << receivedValue;
+            PID_ResponseValue = receivedValue;
+
+            objectValue = object.simulate(PID_ResponseValue);
+
+            //QByteArray data = clientSocket->readAll();
+            //QString str = QString::fromUtf8(data).trimmed();
+            //bool ok = false;
+            //double receivedValue = str.toDouble(&ok);
+            //if (ok) {
+            //    qDebug() << "[Client] Otrzymano od serwera:" << receivedValue;
+            //    wantedValue = receivedValue;
+            //}
         }
 
     } else {
