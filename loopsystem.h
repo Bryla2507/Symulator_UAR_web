@@ -34,6 +34,8 @@ public slots:
     void testConnection();
     void setClientSocket(QTcpSocket* socket);
     void resetConnection();
+    void setTaktowanieJednostronne();
+    void setTaktowanieObustronne(bool, double);
 
 signals:
     void updateGUIControls(SignalType s, double a, double per, double f, double p, double i,
@@ -60,6 +62,9 @@ private:
     double objectValue;
     double deviation;
     double PID_ResponseValue;
+
+    bool czyObiektOnlineDziala;
+    qint32 taktowanieObiektuOnline;
 
     // pola dotyczące samego wykonywania pętli
     bool loopRunning;

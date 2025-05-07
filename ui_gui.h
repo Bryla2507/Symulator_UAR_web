@@ -11,6 +11,7 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QDoubleSpinBox>
 #include <QtWidgets/QFrame>
@@ -91,9 +92,8 @@ public:
     QFrame *line_4;
     QLabel *label_6;
     QHBoxLayout *horizontalLayout_21;
-    QRadioButton *radioNetwork;
     QRadioButton *radioLocal;
-    QLabel *label_20;
+    QRadioButton *radioNetwork;
     QListWidget *listWidgetClientServer;
     QHBoxLayout *horizontalLayout_15;
     QHBoxLayout *horizontalLayout_25;
@@ -102,6 +102,15 @@ public:
     QHBoxLayout *horizontalLayout_26;
     QLabel *label_19;
     QTextEdit *textPort;
+    QLabel *label_23;
+    QHBoxLayout *horizontalLayout_27;
+    QRadioButton *radioJednostronne;
+    QRadioButton *radioObustronne;
+    QLabel *label_22;
+    QDoubleSpinBox *doubleSpinBoxTaktowanieObiektu;
+    QHBoxLayout *horizontalLayout_29;
+    QRadioButton *radioObiektStart;
+    QRadioButton *radioObiektStop;
     QHBoxLayout *horizontalLayout_16;
     QPushButton *networkConfirm;
     QPushButton *testConnect;
@@ -128,6 +137,8 @@ public:
     QHBoxLayout *horizontalLayout_3;
     QMenuBar *menubar;
     QStatusBar *statusbar;
+    QButtonGroup *buttonGroup;
+    QButtonGroup *buttonGroup_2;
 
     void setupUi(QMainWindow *GUI)
     {
@@ -906,23 +917,16 @@ public:
 
         horizontalLayout_21 = new QHBoxLayout();
         horizontalLayout_21->setObjectName("horizontalLayout_21");
+        radioLocal = new QRadioButton(centralwidget);
+        radioLocal->setObjectName("radioLocal");
+        radioLocal->setChecked(true);
+
+        horizontalLayout_21->addWidget(radioLocal);
+
         radioNetwork = new QRadioButton(centralwidget);
         radioNetwork->setObjectName("radioNetwork");
 
         horizontalLayout_21->addWidget(radioNetwork);
-
-        radioLocal = new QRadioButton(centralwidget);
-        radioLocal->setObjectName("radioLocal");
-
-        horizontalLayout_21->addWidget(radioLocal);
-
-
-        verticalLayout_3->addLayout(horizontalLayout_21);
-
-        label_20 = new QLabel(centralwidget);
-        label_20->setObjectName("label_20");
-
-        verticalLayout_3->addWidget(label_20);
 
         listWidgetClientServer = new QListWidget(centralwidget);
         new QListWidgetItem(listWidgetClientServer);
@@ -931,7 +935,10 @@ public:
         listWidgetClientServer->setMaximumSize(QSize(16777215, 40));
         listWidgetClientServer->setSortingEnabled(false);
 
-        verticalLayout_3->addWidget(listWidgetClientServer);
+        horizontalLayout_21->addWidget(listWidgetClientServer);
+
+
+        verticalLayout_3->addLayout(horizontalLayout_21);
 
         horizontalLayout_15 = new QHBoxLayout();
         horizontalLayout_15->setObjectName("horizontalLayout_15");
@@ -967,8 +974,67 @@ public:
 
         horizontalLayout_26->addWidget(textPort);
 
+        label_23 = new QLabel(centralwidget);
+        label_23->setObjectName("label_23");
+
+        horizontalLayout_26->addWidget(label_23);
+
 
         verticalLayout_3->addLayout(horizontalLayout_26);
+
+        horizontalLayout_27 = new QHBoxLayout();
+        horizontalLayout_27->setObjectName("horizontalLayout_27");
+        radioJednostronne = new QRadioButton(centralwidget);
+        buttonGroup = new QButtonGroup(GUI);
+        buttonGroup->setObjectName("buttonGroup");
+        buttonGroup->addButton(radioJednostronne);
+        radioJednostronne->setObjectName("radioJednostronne");
+        radioJednostronne->setChecked(true);
+        radioJednostronne->setAutoExclusive(true);
+
+        horizontalLayout_27->addWidget(radioJednostronne);
+
+        radioObustronne = new QRadioButton(centralwidget);
+        buttonGroup->addButton(radioObustronne);
+        radioObustronne->setObjectName("radioObustronne");
+        radioObustronne->setAutoExclusive(true);
+
+        horizontalLayout_27->addWidget(radioObustronne);
+
+        label_22 = new QLabel(centralwidget);
+        label_22->setObjectName("label_22");
+
+        horizontalLayout_27->addWidget(label_22);
+
+        doubleSpinBoxTaktowanieObiektu = new QDoubleSpinBox(centralwidget);
+        doubleSpinBoxTaktowanieObiektu->setObjectName("doubleSpinBoxTaktowanieObiektu");
+        doubleSpinBoxTaktowanieObiektu->setDecimals(3);
+        doubleSpinBoxTaktowanieObiektu->setMinimum(0.020000000000000);
+
+        horizontalLayout_27->addWidget(doubleSpinBoxTaktowanieObiektu);
+
+
+        verticalLayout_3->addLayout(horizontalLayout_27);
+
+        horizontalLayout_29 = new QHBoxLayout();
+        horizontalLayout_29->setObjectName("horizontalLayout_29");
+        radioObiektStart = new QRadioButton(centralwidget);
+        buttonGroup_2 = new QButtonGroup(GUI);
+        buttonGroup_2->setObjectName("buttonGroup_2");
+        buttonGroup_2->addButton(radioObiektStart);
+        radioObiektStart->setObjectName("radioObiektStart");
+        radioObiektStart->setChecked(true);
+
+        horizontalLayout_29->addWidget(radioObiektStart);
+
+        radioObiektStop = new QRadioButton(centralwidget);
+        buttonGroup_2->addButton(radioObiektStop);
+        radioObiektStop->setObjectName("radioObiektStop");
+
+        horizontalLayout_29->addWidget(radioObiektStop);
+
+
+        verticalLayout_3->addLayout(horizontalLayout_29);
 
         horizontalLayout_16 = new QHBoxLayout();
         horizontalLayout_16->setObjectName("horizontalLayout_16");
@@ -1557,9 +1623,8 @@ public:
         label->setText(QCoreApplication::translate("GUI", "MODEL ARX", nullptr));
         setModel->setText(QCoreApplication::translate("GUI", "Dodaj parametry Modelu ARX", nullptr));
         label_6->setText(QCoreApplication::translate("GUI", "USTAWIENIA PRACY SIECIOWEJ I LOKALNEJ", nullptr));
-        radioNetwork->setText(QCoreApplication::translate("GUI", "Sie\304\207", nullptr));
         radioLocal->setText(QCoreApplication::translate("GUI", "Lokalnie", nullptr));
-        label_20->setText(QCoreApplication::translate("GUI", "Ustawienia pracy sieciowej", nullptr));
+        radioNetwork->setText(QCoreApplication::translate("GUI", "Sie\304\207", nullptr));
 
         const bool __sortingEnabled = listWidgetClientServer->isSortingEnabled();
         listWidgetClientServer->setSortingEnabled(false);
@@ -1571,6 +1636,12 @@ public:
 
         label_18->setText(QCoreApplication::translate("GUI", "Adres IP serwera", nullptr));
         label_19->setText(QCoreApplication::translate("GUI", "Port", nullptr));
+        label_23->setText(QCoreApplication::translate("GUI", "<html><head/><body><p><span style=\" font-weight:700;\">Ustawienia taktowania dla obiektu</span></p></body></html>", nullptr));
+        radioJednostronne->setText(QCoreApplication::translate("GUI", "Jednostronne", nullptr));
+        radioObustronne->setText(QCoreApplication::translate("GUI", "Obustronne", nullptr));
+        label_22->setText(QCoreApplication::translate("GUI", "Interwa\305\202 (min. 0,02s)", nullptr));
+        radioObiektStart->setText(QCoreApplication::translate("GUI", "Uruchom taktowanie obiektu", nullptr));
+        radioObiektStop->setText(QCoreApplication::translate("GUI", "Zatrzymaj taktowanie obiektu", nullptr));
         networkConfirm->setText(QCoreApplication::translate("GUI", "Zatwierd\305\272", nullptr));
         testConnect->setText(QCoreApplication::translate("GUI", "Test po\305\202\304\205czenia", nullptr));
         label_21->setText(QCoreApplication::translate("GUI", "Interwa\305\202 (min. 0,02 s):", nullptr));

@@ -17,6 +17,7 @@ GUI::GUI(QWidget *parent)
     connectionIndicator->setObjectName("connectionIndicator");
 
 
+
     initCharts();
 
 
@@ -523,6 +524,17 @@ void GUI::on_networkConfirm_clicked()
             int port = portText.toInt();
             emit startServerRequest(port);
             ui->statusbar->showMessage("Port użyty przy uruchomieniu serwera: " + ui->textPort->toPlainText());
+            if(ui->radioObustronne->isChecked())
+            {
+                bool czyObiektON;
+                czyObiektON = ui->radioObiektStart->isChecked();
+                emit setTaktowanieObustronne(czyObiektON, ui->doubleSpinBoxTaktowanieObiektu->value());
+            }
+            else
+            {
+                emit setTaktowanieJednostronne();
+            }
+
         }
     }
 

@@ -3368,6 +3368,16 @@
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_21">
           <item>
+           <widget class="QRadioButton" name="radioLocal">
+            <property name="text">
+             <string>Lokalnie</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QRadioButton" name="radioNetwork">
             <property name="text">
              <string>Sieć</string>
@@ -3375,46 +3385,32 @@
            </widget>
           </item>
           <item>
-           <widget class="QRadioButton" name="radioLocal">
-            <property name="text">
-             <string>Lokalnie</string>
+           <widget class="QListWidget" name="listWidgetClientServer">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>40</height>
+             </size>
             </property>
+            <property name="currentRow">
+             <number>0</number>
+            </property>
+            <property name="sortingEnabled">
+             <bool>false</bool>
+            </property>
+            <item>
+             <property name="text">
+              <string>Serwer PID</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Klient ARX</string>
+             </property>
+            </item>
            </widget>
           </item>
          </layout>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_20">
-          <property name="text">
-           <string>Ustawienia pracy sieciowej</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QListWidget" name="listWidgetClientServer">
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="currentRow">
-           <number>0</number>
-          </property>
-          <property name="sortingEnabled">
-           <bool>false</bool>
-          </property>
-          <item>
-           <property name="text">
-            <string>Serwer PID</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Klient ARX</string>
-           </property>
-          </item>
-         </widget>
         </item>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_15"/>
@@ -3457,6 +3453,90 @@
               <height>28</height>
              </size>
             </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_23">
+            <property name="text">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Ustawienia taktowania dla obiektu&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_27">
+          <item>
+           <widget class="QRadioButton" name="radioJednostronne">
+            <property name="text">
+             <string>Jednostronne</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+            <property name="autoExclusive">
+             <bool>true</bool>
+            </property>
+            <attribute name="buttonGroup">
+             <string notr="true">buttonGroup</string>
+            </attribute>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="radioObustronne">
+            <property name="text">
+             <string>Obustronne</string>
+            </property>
+            <property name="autoExclusive">
+             <bool>true</bool>
+            </property>
+            <attribute name="buttonGroup">
+             <string notr="true">buttonGroup</string>
+            </attribute>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_22">
+            <property name="text">
+             <string>Interwał (min. 0,02s)</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QDoubleSpinBox" name="doubleSpinBoxTaktowanieObiektu">
+            <property name="decimals">
+             <number>3</number>
+            </property>
+            <property name="minimum">
+             <double>0.020000000000000</double>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_29">
+          <item>
+           <widget class="QRadioButton" name="radioObiektStart">
+            <property name="text">
+             <string>Uruchom taktowanie obiektu</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+            <attribute name="buttonGroup">
+             <string notr="true">buttonGroup_2</string>
+            </attribute>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="radioObiektStop">
+            <property name="text">
+             <string>Zatrzymaj taktowanie obiektu</string>
+            </property>
+            <attribute name="buttonGroup">
+             <string notr="true">buttonGroup_2</string>
+            </attribute>
            </widget>
           </item>
          </layout>
@@ -6358,4 +6438,8 @@
  </widget>
  <resources/>
  <connections/>
+ <buttongroups>
+  <buttongroup name="buttonGroup"/>
+  <buttongroup name="buttonGroup_2"/>
+ </buttongroups>
 </ui>
