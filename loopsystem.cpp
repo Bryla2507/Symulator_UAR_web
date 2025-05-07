@@ -64,18 +64,30 @@ void LoopSystem::executeLoop()
         qDebug() << "serwer czeka na dane";
         if (serverSocket->bytesAvailable()) {
 
+            int bytesAvailable = serverSocket->bytesAvailable();
+            if(bytesAvailable >= sizeof(double))
+            {
+                qDebug() << "serwer ma dostępne dane";
+                int bytesToSkip = bytesAvailable - sizeof(double);
+
+                QDataStream in;
+                in.setDevice(serverSocket);
+
+                in.skipRawData(bytesToSkip);
+
+                double receivedValue;
+                in >> receivedValue;
+                qDebug() << "[Server] Otrzymano od klienta:" << receivedValue;
+                objectValue = receivedValue;
+            }
             // odbieranie danych z serwera na kliencie
-            qDebug() << "serwer ma dostępne dane";
-            QDataStream in;
-            in.setDevice(serverSocket);
-            double receivedValue;
-            in >> receivedValue;
-            qDebug() << "[Server] Otrzymano od klienta:" << receivedValue;
-            objectValue = receivedValue;
+
 
             wantedValue = generator.simulate(loopInterval);
             deviation = wantedValue - objectValue;
             PID_ResponseValue = regulator.simulate(deviation);
+
+            emit sendObjectValueToChart(objectValue);
             /*
             qDebug() << "serwer ma dostępne dane";
             QByteArray data = serverSocket->readAll();
@@ -98,15 +110,26 @@ void LoopSystem::executeLoop()
 
         qDebug() << "klient czeka na dane";
         if (clientSocket->bytesAvailable()) {
+            int bytesAvailable = clientSocket->bytesAvailable();
+            if(bytesAvailable >= sizeof(double))
+            {
+                qDebug() << "klient ma dostępne dane";
+                int bytesToSkip = bytesAvailable - sizeof(double);
+
+                QDataStream in;
+                in.setDevice(clientSocket);
+
+                in.skipRawData(bytesToSkip);
+
+                double receivedValue;
+                in >> receivedValue;
+                qDebug() << "[Client] Otrzymano od serwera:" << receivedValue;
+                PID_ResponseValue = receivedValue;
+
+            }
 
             // odbieranie danych z serwera na kliencie
-            qDebug() << "klient ma dostępne dane";
-            QDataStream in;
-            in.setDevice(clientSocket);
-            double receivedValue;
-            in >> receivedValue;
-            qDebug() << "[Client] Otrzymano od serwera:" << receivedValue;
-            PID_ResponseValue = receivedValue;
+
 
             objectValue = object.simulate(PID_ResponseValue);
 

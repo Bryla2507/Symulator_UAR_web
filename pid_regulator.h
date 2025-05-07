@@ -36,6 +36,7 @@ signals:
     void sendPIDValues(double uP, double uI, double uD, double output);
     void sendDevationValue(double value);
 
+
 private:
     double kP, tI, tD; // parametry
     double uP, uI, uD; // wartości
