@@ -104,7 +104,7 @@ void LoopSystem::connectLoopSignals()
 
 void LoopSystem::startServer(int port)
 {
-    port = 25565; //temporary
+   // port = 25565; //temporary
     if (!server) {
         server = new QTcpServer(this);
         connect(server, &QTcpServer::newConnection, this, &LoopSystem::newConnection);

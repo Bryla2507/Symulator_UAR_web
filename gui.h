@@ -58,7 +58,7 @@ signals:
     void saveSimulation(QString filePath);
     void loadSimulation(QString filePath);
 
-    void startServerRequest(quint16 port);
+    void startServerRequest(int port);
     void testConnectionRequest();
     void clientSocketCreated(QTcpSocket* socket);
     void serverSocketCreated(QTcpSocket* socket);

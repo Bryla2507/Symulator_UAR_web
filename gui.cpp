@@ -505,8 +505,7 @@ void GUI::on_networkConfirm_clicked()
             setGridLayout(ui->gridLayout, false);
 
 
-            QString portText = ui->textIP->toPlainText();  // bo to QTextEdit
-            int port = portText.toInt();
+            int port = ui->textPort->toPlainText().toInt();  // bo to QTextEdit string-> na int
             emit startServerRequest(port);
         }
     }
