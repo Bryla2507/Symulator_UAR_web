@@ -466,10 +466,12 @@ void GUI::on_networkConfirm_clicked()
     setHorizontalLayout(ui->horizontalLayout_13, true);
     setHorizontalLayout(ui->horizontalLayout_14, true);
     setGridLayout(ui->gridLayout, true);
-    if(server != nullptr)
-        server->close();
-    if(clientSocket != nullptr)
-        clientSocket->disconnectFromHost();
+
+    emit resetConnection();
+    //if(server != nullptr)
+    //    server->close();
+    //if(clientSocket != nullptr)
+    //    clientSocket->disconnectFromHost();
 
 
     if(ui->radioNetwork->isChecked())
@@ -505,7 +507,7 @@ void GUI::on_networkConfirm_clicked()
             setGridLayout(ui->gridLayout, false);
 
 
-            QString portText = ui->textIP->toPlainText();  // bo to QTextEdit
+            QString portText = ui->textPort->toPlainText();  // bo to QTextEdit
             int port = portText.toInt();
             emit startServerRequest(port);
         }

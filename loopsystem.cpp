@@ -176,7 +176,7 @@ void LoopSystem::connectLoopSignals()
 
 void LoopSystem::startServer(int port)
 {
-    port = 25565; //temporary
+    //port = 25565; //temporary
     if (!server) {
         server = new QTcpServer(this);
         connect(server, &QTcpServer::newConnection, this, &LoopSystem::newConnection);
@@ -230,5 +230,12 @@ void LoopSystem::setClientSocket(QTcpSocket* socket)
     });
 }
 
+void LoopSystem::resetConnection()
+{
+    if(server != nullptr)
+        server->close();
+    if(clientSocket != nullptr)
+        clientSocket->disconnectFromHost();
+}
 
 

@@ -62,6 +62,7 @@ signals:
     void testConnectionRequest();
     void clientSocketCreated(QTcpSocket* socket);
     void serverSocketCreated(QTcpSocket* socket);
+    void resetConnection();
 
 
 private slots:

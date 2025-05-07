@@ -33,6 +33,7 @@ public slots:
     void startServer(int port);
     void testConnection();
     void setClientSocket(QTcpSocket* socket);
+    void resetConnection();
 
 signals:
     void updateGUIControls(SignalType s, double a, double per, double f, double p, double i,
