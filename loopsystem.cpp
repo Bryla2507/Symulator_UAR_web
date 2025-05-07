@@ -47,14 +47,42 @@ ARX_Model &LoopSystem::getObject()
 
 void LoopSystem::executeLoop()
 {
-    wantedValue = generator.simulate(loopInterval);
+    if (server && server->isListening() && serverSocket && serverSocket->state() == QAbstractSocket::ConnectedState) {
+        // Serwer
+        if (serverSocket->bytesAvailable()) {
+            QByteArray data = serverSocket->readAll();
+            QString str = QString::fromUtf8(data).trimmed();
+            bool ok = false;
+            double receivedValue = str.toDouble(&ok);
+            if (ok) {
+                qDebug() << "[Server] Otrzymano od klienta:" << receivedValue;
+                wantedValue = receivedValue;
+            }
+        }
 
-    deviation = wantedValue - objectValue;
+    } else if (clientSocket && clientSocket->state() == QAbstractSocket::ConnectedState) {
+        // Klient
+        if (clientSocket->bytesAvailable()) {
+            QByteArray data = clientSocket->readAll();
+            QString str = QString::fromUtf8(data).trimmed();
+            bool ok = false;
+            double receivedValue = str.toDouble(&ok);
+            if (ok) {
+                qDebug() << "[Client] Otrzymano od serwera:" << receivedValue;
+                wantedValue = receivedValue;
+            }
+        }
 
-    PID_ResponseValue = regulator.simulate(deviation);
-
-    objectValue = object.simulate(PID_ResponseValue);
+    } else {
+        // Praca lokalna
+        wantedValue = generator.simulate(loopInterval);
+        deviation = wantedValue - objectValue;
+        PID_ResponseValue = regulator.simulate(deviation);
+        objectValue = object.simulate(PID_ResponseValue);
+    }
 }
+
+
 
 void LoopSystem::init()
 {
@@ -87,3 +115,36 @@ void LoopSystem::newConnection()
     serverSocket = server->nextPendingConnection();
     qDebug() << "New connection established!";
 }
+
+void LoopSystem::testConnection()
+{
+    if (clientSocket != nullptr) {
+        if (!clientSocket->peerAddress().toString().isEmpty()) {
+            qDebug() << "Adres serwera: " << clientSocket->peerAddress().toString();
+            QMessageBox::information(nullptr, "Test serwera", "Adres serwera: " + clientSocket->peerAddress().toString());
+        } else {
+            QMessageBox::information(nullptr, "Test serwera", "Serwer niepodłączony");
+        }
+    } else {
+        QMessageBox::information(nullptr, "Test serwera", "Serwer niepodłączony");
+    }
+
+    if (serverSocket != nullptr) {
+        if (!serverSocket->peerAddress().toString().isEmpty()) {
+            qDebug() << "Adres klienta: " << serverSocket->peerAddress().toString();
+            QMessageBox::information(nullptr, "Test klienta", "Adres klienta: " + serverSocket->peerAddress().toString());
+        } else {
+            QMessageBox::information(nullptr, "Test klienta", "Klient niepodłączony");
+        }
+    } else {
+        QMessageBox::information(nullptr, "Test klienta", "Klient niepodłączony");
+    }
+}
+
+void LoopSystem::setClientSocket(QTcpSocket* socket)
+{
+    this->clientSocket = socket;
+}
+
+
+

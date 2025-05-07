@@ -59,6 +59,10 @@ signals:
     void loadSimulation(QString filePath);
 
     void startServerRequest(quint16 port);
+    void testConnectionRequest();
+    void clientSocketCreated(QTcpSocket* socket);
+    void serverSocketCreated(QTcpSocket* socket);
+
 
 private slots:
     void on_setGenerator_clicked();
@@ -80,7 +84,8 @@ private slots:
 
     void on_networkConfirm_clicked();
 
-    void on_testConnect_clicked();
+   void on_testConnect_clicked();
+
 
 private:
     Ui::GUI *ui;

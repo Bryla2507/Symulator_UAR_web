@@ -8,12 +8,11 @@
 #include "arx_model.h"
 #include <QTcpServer>
 #include <QTcpSocket>
+#include <QMessageBox>
 
 class LoopSystem : public QObject
 {
     Q_OBJECT
-    QTcpServer *server = nullptr;
-    QTcpSocket *serverSocket = nullptr;
 public:
     LoopSystem(QObject *parent = nullptr);
 
@@ -31,7 +30,9 @@ public:
 
 public slots:
     void executeLoop();
-    void startServer(quint16 port);  // np. domyślnie port 1234
+    void startServer(quint16 port);
+    void testConnection();
+    void setClientSocket(QTcpSocket* socket);
 
 signals:
     void updateGUIControls(SignalType s, double a, double per, double f, double p, double i,
@@ -60,6 +61,11 @@ private:
     bool loopRunning;
     double loopInterval;
     QTimer* loopTimer;
+
+
+    QTcpServer *server = nullptr;
+    QTcpSocket *serverSocket = nullptr;
+    QTcpSocket *clientSocket = nullptr;
 };
 
 #endif // LOOPSYSTEM_H

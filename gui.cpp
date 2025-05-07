@@ -491,7 +491,7 @@ void GUI::on_networkConfirm_clicked()
 
             clientSocket = new QTcpSocket(this);
             clientSocket->connectToHost(ui->textIP->toPlainText(), ui->textPort->toPlainText().toInt());
-
+            emit clientSocketCreated(clientSocket);
             connect(clientSocket, &QTcpSocket::connected, []() {
                 qDebug() << "Połączono z serwerem";
             });
@@ -513,6 +513,12 @@ void GUI::on_networkConfirm_clicked()
 }
 
 
+void GUI::on_testConnect_clicked(){
+    emit testConnectionRequest();
+}
+
+
+
 // void GUI::startServer() {
 //     server = new QTcpServer(this);
 //     if(server->listen(QHostAddress::Any, ui->textPort->toPlainText().toInt())) {
@@ -528,38 +534,38 @@ void GUI::on_networkConfirm_clicked()
 
 // }
 
-void GUI::on_testConnect_clicked()
-{
-    if(clientSocket != nullptr)
-    {
-        if(clientSocket->peerAddress().toString() != "")
-        {
-            QMessageBox::information(this,"Test serwera", "Adres serwera: " + clientSocket->peerAddress().toString());
-            qDebug() << clientSocket->peerAddress().toString();
-            qDebug() << "test serwera";
+// void GUI::on_testConnect_clicked()  //przeniesc
+// {
+//     if(clientSocket != nullptr) //tu reset connection
+//     {
+//         if(clientSocket->peerAddress().toString() != "")
+//         {
+//             QMessageBox::information(this,"Test serwera", "Adres serwera: " + clientSocket->peerAddress().toString());
+//             qDebug() << clientSocket->peerAddress().toString();
+//             qDebug() << "test serwera";
 
-        }
-        else
-            QMessageBox::information(this,"Test serwera", "Serwer niepodłączony");
+//         }
+//         else
+//             QMessageBox::information(this,"Test serwera", "Serwer niepodłączony");
 
-    }
-    else
-        QMessageBox::information(this,"Test serwera", "Serwer niepodłączony");
+//     }
+//     else
+//         QMessageBox::information(this,"Test serwera", "Serwer niepodłączony");
 
-    if(serverSocket != nullptr)
-    {
-        if(serverSocket->peerAddress().toString() != "")
-        {
-            QMessageBox::information(this,"Test klienta", "Adres klienta: " + serverSocket->peerAddress().toString());
-            qDebug() << serverSocket->peerAddress().toString();
-            qDebug() << "test klienta";
-        }
-        else
-            QMessageBox::information(this,"Test klienta", "Klient niepodłączony");
+//     if(serverSocket != nullptr)
+//     {
+//         if(serverSocket->peerAddress().toString() != "")
+//         {
+//             QMessageBox::information(this,"Test klienta", "Adres klienta: " + serverSocket->peerAddress().toString());
+//             qDebug() << serverSocket->peerAddress().toString();
+//             qDebug() << "test klienta";
+//         }
+//         else
+//             QMessageBox::information(this,"Test klienta", "Klient niepodłączony");
 
-    }
-    else
-        QMessageBox::information(this,"Test klienta", "Klient niepodłączony");
+//     }
+//     else
+//         QMessageBox::information(this,"Test klienta", "Klient niepodłączony");
 
-}
+// }
 
