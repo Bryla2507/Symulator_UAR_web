@@ -61,7 +61,7 @@ void LoopSystem::executeLoop()
         qDebug() << block.toHex();
         QByteArray packet;
         QDataStream packetStream(&packet, QIODevice::WriteOnly);
-        packetStream.setVersion(QDataStream::Qt_6_9);
+        packetStream.setVersion(QDataStream::Qt_6_5);
         packetStream << static_cast<quint32>(block.size());
         packet.append(block);
 
@@ -75,7 +75,7 @@ void LoopSystem::executeLoop()
             int bytesAvailable = serverSocket->bytesAvailable();
             if(bytesAvailable >= sizeof(double))
             {
-                emit setGreenLight();
+                emit setGreenLight(); networkWasDisconnected = false;   //reset flagi bo polaczenie jest aktywne
                 qDebug() << "serwer ma dostępne dane";
                 int bytesToSkip = bytesAvailable - sizeof(double);
 
@@ -109,6 +109,11 @@ void LoopSystem::executeLoop()
         else
         {
             emit setRedLight();
+
+            if (!networkWasDisconnected) {
+                emit networkDisconnected();
+                networkWasDisconnected = true;
+            }
         }
 
         wantedValue = generator.simulate(loopInterval);
@@ -149,6 +154,7 @@ void LoopSystem::executeLoop()
                 qDebug() << czyObiektOnlineDziala;
                 qDebug() << taktowanieObiektuOnline;
 
+                networkWasDisconnected = false;    //reset flagi bo polaczenie jest aktywne
 
                 if(czyObiektOnlineDziala) // jeśli odebrano włączony
                 {
@@ -234,6 +240,7 @@ void LoopSystem::startServer(int port)
             qDebug() << "Server could not start!";
         } else {
             qDebug() << "Server started on port" << port;
+            networkWasDisconnected = false;    //reset flagi bo polaczenie jest aktywne
         }
     }
     localLoop = loopRunning;
@@ -282,6 +289,8 @@ void LoopSystem::setClientSocket(QString ip, int port)
     localLoop = loopRunning;
     loopRunning = false;
     startLoop();
+
+    networkWasDisconnected = false;    //reset flagi bo polaczenie jest aktywne
 }
 
 void LoopSystem::resetConnection()

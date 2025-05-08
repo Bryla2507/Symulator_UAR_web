@@ -47,6 +47,7 @@ public slots:
                            double z, double sf, double cc);
     void setGreenLight();
     void setRedLight();
+    void networkDisconnected();
 
 signals:
     void newGeneratorParameters(SignalType signalType, double amplitude, double period, double frequency, double signalFill, double constComponent);

@@ -45,10 +45,12 @@ signals:
     void sendObjectValueToChart(double value);
     void setRedLight();
     void setGreenLight();
+    void networkDisconnected();
 
 private:
     void init();
     void newConnection();
+    bool networkWasDisconnected = false;    //flaga sprawdzajaca czy polaczenie zostalo zerwane
 
     // funkcje pętli sprzężenia zwrotnego
     void connectLoopSignals();
