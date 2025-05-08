@@ -32,19 +32,20 @@ public slots:
     void executeLoop();
     void startServer(int port);
     void testConnection();
-    void setClientSocket(QTcpSocket* socket);
+    void setClientSocket(QString, int);
+    void resetConnection();
+    void setTaktowanieJednostronne();
+    void setTaktowanieObustronne(bool, double);
+    void setLoop();
 
 signals:
     void updateGUIControls(SignalType s, double a, double per, double f, double p, double i,
                            double d, bool win, double min, double max, int k, std::vector<double> ca, std::vector<double> cb,
                            double z, double sf, double cc);
-<<<<<<< Updated upstream
-=======
     void sendObjectValueToChart(double value);
     void setRedLight();
     void setGreenLight();
     void networkDisconnected();
->>>>>>> Stashed changes
 
 private:
     void init();
@@ -66,8 +67,12 @@ private:
     double deviation;
     double PID_ResponseValue;
 
+    bool czyObiektOnlineDziala;
+    qint32 taktowanieObiektuOnline;
+
     // pola dotyczące samego wykonywania pętli
     bool loopRunning;
+    bool localLoop;
     double loopInterval;
     QTimer* loopTimer;
 

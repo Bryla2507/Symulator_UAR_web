@@ -45,12 +45,9 @@ public slots:
     void updateGUIControls(SignalType s, double a, double per, double f, double p, double i,
                            double d, bool win, double min, double max, int k, std::vector<double> ca, std::vector<double> cb,
                            double z, double sf, double cc);
-<<<<<<< Updated upstream
-=======
     void setGreenLight();
     void setRedLight();
     void networkDisconnected();
->>>>>>> Stashed changes
 
 signals:
     void newGeneratorParameters(SignalType signalType, double amplitude, double period, double frequency, double signalFill, double constComponent);
@@ -63,11 +60,16 @@ signals:
     void resetGeneratorTime();
     void saveSimulation(QString filePath);
     void loadSimulation(QString filePath);
+    void setLocalLoop();
 
     void startServerRequest(int port);
     void testConnectionRequest();
-    void clientSocketCreated(QTcpSocket* socket);
+    void clientSocketCreated(QString, int);
     void serverSocketCreated(QTcpSocket* socket);
+    void resetConnection();
+
+    void setTaktowanieObustronne(bool czyObiektON, double intervalObiekt);
+    void setTaktowanieJednostronne();
 
 
 private slots:
@@ -99,6 +101,8 @@ private:
     QTcpServer *server = nullptr;
     QTcpSocket *serverSocket = nullptr;
     QTcpSocket *clientSocket = nullptr;
+    QLabel* connectionIndicator;
+
 
     // funkcje do samych wykresów ;D
     void initCharts();

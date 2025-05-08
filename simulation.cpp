@@ -38,6 +38,8 @@ void Simulation::connectBackendFrontend()
     QObject::connect(&gui, &GUI::resetIntegral, regulator, &PID_Regulator::resetIntegralMemory);
 
     QObject::connect(object, &ARX_Model::sendObjectValueToChart, &gui, &GUI::updateObjectSerie);
+    // duplikowanie sygnału tak, aby przy braku użycia modelu ARX (serwer) wykresy przyjmowały wartości z klienta
+    QObject::connect(&loop, &LoopSystem::sendObjectValueToChart, &gui, &GUI::updateObjectSerie);
     QObject::connect(&gui, &GUI::newModelParameters, object, &ARX_Model::setModelParameters);
 
     QObject::connect(&gui, &GUI::startStop, &loop, &LoopSystem::startLoop);
@@ -51,8 +53,6 @@ void Simulation::connectBackendFrontend()
     QObject::connect(&gui, &GUI::startServerRequest, &loop, &LoopSystem::startServer);
     QObject::connect(&gui, &GUI::testConnectionRequest, &loop, &LoopSystem::testConnection);
     QObject::connect(&gui, &GUI::clientSocketCreated, &loop, &LoopSystem::setClientSocket);
-<<<<<<< Updated upstream
-=======
     QObject::connect(&gui, &GUI::resetConnection, &loop, &LoopSystem::resetConnection);
 
     QObject::connect(&gui, &GUI::setTaktowanieJednostronne, &loop, &LoopSystem::setTaktowanieJednostronne);
@@ -63,7 +63,6 @@ void Simulation::connectBackendFrontend()
     QObject::connect(&loop, &LoopSystem::setRedLight, &gui, &GUI::setRedLight);
     QObject::connect(&loop, &LoopSystem::networkDisconnected, &gui, &GUI::networkDisconnected);
 
->>>>>>> Stashed changes
 
 
 }

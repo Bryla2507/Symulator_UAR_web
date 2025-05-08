@@ -51,12 +51,26 @@ void LoopSystem::executeLoop()
     // clientSocket trzyma dane o serwerze w instancji klienta
     // serverSocket powinien wysyłać dane z regulatora, a odbierać z obiektu
     // clientSocket powinien wysyłać dane z obiektu, a odbierać z regulatora
-    if (server && server->isListening() && serverSocket && serverSocket->state() == QAbstractSocket::ConnectedState) {
+    if ((server != nullptr) && (serverSocket != nullptr) && (serverSocket->state() == QAbstractSocket::ConnectedState) && server->isListening()) {
         // Serwer
+
+        // block odpowiedzialny za wysłanie danych z regulatora
+        QByteArray block;
+        QDataStream out(&block, QIODevice::WriteOnly);
+        out << static_cast<qint32>(taktowanieObiektuOnline) << czyObiektOnlineDziala << PID_ResponseValue;
+        qDebug() << block.toHex();
+        QByteArray packet;
+        QDataStream packetStream(&packet, QIODevice::WriteOnly);
+        packetStream.setVersion(QDataStream::Qt_6_9);
+        packetStream << static_cast<quint32>(block.size());
+        packet.append(block);
+
+        serverSocket->write(packet);
+
+
+
         qDebug() << "serwer czeka na dane";
         if (serverSocket->bytesAvailable()) {
-<<<<<<< Updated upstream
-=======
 
             int bytesAvailable = serverSocket->bytesAvailable();
             if(bytesAvailable >= sizeof(double))
@@ -75,7 +89,6 @@ void LoopSystem::executeLoop()
                 in >> receivedValue;
                 qDebug() << "[Server] Otrzymano od klienta:" << receivedValue;
                 objectValue = receivedValue;
-                networkWasDisconnected = false;
             }
 
             // odbieranie danych z klienta na serwerze
@@ -83,7 +96,6 @@ void LoopSystem::executeLoop()
 
 
             /*
->>>>>>> Stashed changes
             qDebug() << "serwer ma dostępne dane";
             QByteArray data = serverSocket->readAll();
             QString str = QString::fromUtf8(data).trimmed();
@@ -93,9 +105,8 @@ void LoopSystem::executeLoop()
                 qDebug() << "[Server] Otrzymano od klienta:" << receivedValue;
                 wantedValue = receivedValue;
             }
+            */
         }
-<<<<<<< Updated upstream
-=======
         else
         {
             emit setRedLight();
@@ -110,22 +121,21 @@ void LoopSystem::executeLoop()
         PID_ResponseValue = regulator.simulate(deviation);
 
         emit sendObjectValueToChart(objectValue);
->>>>>>> Stashed changes
 
     } else if (clientSocket && clientSocket->state() == QAbstractSocket::ConnectedState) {
         // Klient
+
+
+        //
+        qDebug() << clientSocket->peerAddress();
+        QByteArray block;
+        QDataStream out(&block, QIODevice::WriteOnly);
+        out << objectValue;
+        clientSocket->write(block);
+
         qDebug() << "klient czeka na dane";
+        qDebug() << clientSocket->state();
         if (clientSocket->bytesAvailable()) {
-<<<<<<< Updated upstream
-            qDebug() << "klient ma dostępne dane";
-            QByteArray data = clientSocket->readAll();
-            QString str = QString::fromUtf8(data).trimmed();
-            bool ok = false;
-            double receivedValue = str.toDouble(&ok);
-            if (ok) {
-                qDebug() << "[Client] Otrzymano od serwera:" << receivedValue;
-                wantedValue = receivedValue;
-=======
             int bytesAvailable = clientSocket->bytesAvailable();
             if(bytesAvailable >= (sizeof(double)+sizeof(qint32)+sizeof(bool)))
             {
@@ -165,12 +175,26 @@ void LoopSystem::executeLoop()
                 }
 
 
->>>>>>> Stashed changes
             }
+
+            // odbieranie danych z serwera na kliencie
+
+
+
+
+            //QByteArray data = clientSocket->readAll();
+            //QString str = QString::fromUtf8(data).trimmed();
+            //bool ok = false;
+            //double receivedValue = str.toDouble(&ok);
+            //if (ok) {
+            //    qDebug() << "[Client] Otrzymano od serwera:" << receivedValue;
+            //    wantedValue = receivedValue;
+            //}
         }
 
     } else {
         // Praca lokalna
+        emit setRedLight();
         wantedValue = generator.simulate(loopInterval);
         deviation = wantedValue - objectValue;
         PID_ResponseValue = regulator.simulate(deviation);
@@ -178,6 +202,18 @@ void LoopSystem::executeLoop()
     }
 }
 
+void LoopSystem::setTaktowanieObustronne(bool czyObiektDziala, double intervalObiektu)
+{
+    czyObiektOnlineDziala = czyObiektDziala;
+
+    taktowanieObiektuOnline = intervalObiektu*1000;
+}
+
+void LoopSystem::setTaktowanieJednostronne()
+{
+    czyObiektOnlineDziala = true;
+    taktowanieObiektuOnline = 15;
+}
 
 
 void LoopSystem::init()
@@ -192,11 +228,13 @@ void LoopSystem::connectLoopSignals()
 
 void LoopSystem::startServer(int port)
 {
-   // port = 25565; //temporary
+    //port = 25565; //temporary
     if (!server) {
         server = new QTcpServer(this);
         connect(server, &QTcpServer::newConnection, this, &LoopSystem::newConnection);
     }
+    else
+        connect(server, &QTcpServer::newConnection, this, &LoopSystem::newConnection);
 
     if (!server->isListening()) {
         if (!server->listen(QHostAddress::Any, port)) {
@@ -207,18 +245,16 @@ void LoopSystem::startServer(int port)
             networkWasDisconnected = false;    //reset flagi bo polaczenie jest aktywne
         }
     }
-<<<<<<< Updated upstream
-=======
     localLoop = loopRunning;
 
 
->>>>>>> Stashed changes
 }
 
 void LoopSystem::newConnection()
 {
     serverSocket = server->nextPendingConnection();
     qDebug() << "New connection established!";
+
 }
 
 void LoopSystem::testConnection()
@@ -246,14 +282,14 @@ void LoopSystem::testConnection()
     }
 }
 
-void LoopSystem::setClientSocket(QTcpSocket* socket)
+void LoopSystem::setClientSocket(QString ip, int port)
 {
-    this->clientSocket = socket;
+    if(clientSocket == nullptr)
+        this->clientSocket = new QTcpSocket(this);
+    clientSocket->connectToHost(ip, port);
     connect(clientSocket, &QTcpSocket::connected, []() {
         qDebug() << "Połączono z serwerem";
     });
-<<<<<<< Updated upstream
-=======
     localLoop = loopRunning;
     loopRunning = false;
     startLoop();
@@ -297,8 +333,6 @@ void LoopSystem::setLoop()
         loopRunning = true;
         startLoop();
     }
->>>>>>> Stashed changes
 }
-
 
 

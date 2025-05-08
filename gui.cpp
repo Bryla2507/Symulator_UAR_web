@@ -8,7 +8,19 @@ GUI::GUI(QWidget *parent)
 {
     ui->setupUi(this);
 
+
+
+    connectionIndicator = new QLabel("");
+    connectionIndicator->setFixedWidth(25);
+    ui->statusbar->addPermanentWidget(connectionIndicator, 0);
+    connectionIndicator->setAutoFillBackground(true);
+    connectionIndicator->setObjectName("connectionIndicator");
+
+
+
     initCharts();
+
+
 
     interval = 0.02; // poczatkowo
 
@@ -24,9 +36,8 @@ GUI::GUI(QWidget *parent)
         background-color: rgb(20, 20, 20);
     }
 
-    QLabel {
-        color: white;
-    }
+
+
 
     /* ZIELONY TEKST DLA OKREŚLONYCH LABELI */
     #label, #label_2, #label_3, #label_8, #label_B, #label_Z, #label_6{
@@ -174,6 +185,8 @@ void GUI::initCharts() {
 
     charts["Składowe PID"].series[1]->setVisible(false);
     charts["Składowe PID"].series[2]->setVisible(false);
+
+
 }
 
 void GUI::configureChart(QChart* chart,const QString xLabel,const QString yLabel) {
@@ -459,17 +472,33 @@ void setHorizontalLayout(QHBoxLayout* layout, bool var) {
 void GUI::on_networkConfirm_clicked()
 {
     setGridLayout(ui->gridLayout_3, true);
+    setGridLayout(ui->gridLayout_2, true);
+    setGridLayout(ui->gridLayout_4, true);
+    setHorizontalLayout(ui->horizontalLayout_18, true);
+    setHorizontalLayout(ui->horizontalLayout_19, true);
+    setHorizontalLayout(ui->horizontalLayout_20, true);
+    setHorizontalLayout(ui->horizontalLayout_22, true);
+
+    setHorizontalLayout(ui->horizontalLayout_5, true);
+    setHorizontalLayout(ui->horizontalLayout_6, true);
+    setHorizontalLayout(ui->horizontalLayout_8, true);
+
     setHorizontalLayout(ui->horizontalLayout_9, true);
     setHorizontalLayout(ui->horizontalLayout_10, true);
     setHorizontalLayout(ui->horizontalLayout_11, true);
     setHorizontalLayout(ui->horizontalLayout_12, true);
     setHorizontalLayout(ui->horizontalLayout_13, true);
     setHorizontalLayout(ui->horizontalLayout_14, true);
+    setHorizontalLayout(ui->horizontalLayout_17, true);
+    setHorizontalLayout(ui->horizontalLayout_23, true);
+    setHorizontalLayout(ui->horizontalLayout_24, true);
     setGridLayout(ui->gridLayout, true);
-    if(server != nullptr)
-        server->close();
-    if(clientSocket != nullptr)
-        clientSocket->disconnectFromHost();
+
+    emit resetConnection();
+    //if(server != nullptr)
+    //    server->close();
+    //if(clientSocket != nullptr)
+    //    clientSocket->disconnectFromHost();
 
 
     if(ui->radioNetwork->isChecked())
@@ -477,6 +506,8 @@ void GUI::on_networkConfirm_clicked()
         if(ui->listWidgetClientServer->currentItem()==ui->listWidgetClientServer->item(1))
         {
             setGridLayout(ui->gridLayout_3, false);
+            setGridLayout(ui->gridLayout_2, false);
+            setGridLayout(ui->gridLayout_4, false);
             setHorizontalLayout(ui->horizontalLayout_9, false);
             setHorizontalLayout(ui->horizontalLayout_10, false);
             setHorizontalLayout(ui->horizontalLayout_11, false);
@@ -484,18 +515,33 @@ void GUI::on_networkConfirm_clicked()
             setHorizontalLayout(ui->horizontalLayout_13, false);
             setHorizontalLayout(ui->horizontalLayout_14, false);
 
+            setHorizontalLayout(ui->horizontalLayout_18, false);
+            setHorizontalLayout(ui->horizontalLayout_19, false);
+            setHorizontalLayout(ui->horizontalLayout_20, false);
+            setHorizontalLayout(ui->horizontalLayout_22, false);
+
+            setHorizontalLayout(ui->horizontalLayout_17, false);
+            setHorizontalLayout(ui->horizontalLayout_23, false);
+            setHorizontalLayout(ui->horizontalLayout_24, false);
+
+            setHorizontalLayout(ui->horizontalLayout_5, false);
+            setHorizontalLayout(ui->horizontalLayout_6, false);
+            setHorizontalLayout(ui->horizontalLayout_8, false);
+
+
+
             if(ui->textPort->toPlainText()=="")
                 ui->textPort->setText("25565");
             if(ui->textIP->toPlainText()=="")
                 ui->textIP->setText("localhost");
 
-            clientSocket = new QTcpSocket(this);
-            clientSocket->connectToHost(ui->textIP->toPlainText(), ui->textPort->toPlainText().toInt());
-            emit clientSocketCreated(clientSocket);
+            //clientSocket = new QTcpSocket(this);
+            //clientSocket->connectToHost(ui->textIP->toPlainText(), ui->textPort->toPlainText().toInt());
+            emit clientSocketCreated(ui->textIP->toPlainText(), ui->textPort->toPlainText().toInt());
             connect(clientSocket, &QTcpSocket::connected, []() {
                 qDebug() << "Połączono z serwerem";
             });
-
+            ui->statusbar->showMessage("Używany adres serwera: " + ui->textIP->toPlainText() + "   Port: " + ui->textPort->toPlainText());
         }
 
         else
@@ -505,10 +551,32 @@ void GUI::on_networkConfirm_clicked()
             setGridLayout(ui->gridLayout, false);
 
 
-            int port = ui->textPort->toPlainText().toInt();  // bo to QTextEdit string-> na int
+            QString portText = ui->textPort->toPlainText();  // bo to QTextEdit
+            int port = portText.toInt();
             emit startServerRequest(port);
+            ui->statusbar->showMessage("Port użyty przy uruchomieniu serwera: " + ui->textPort->toPlainText());
+            if(ui->radioObustronne->isChecked())
+            {
+                bool czyObiektON;
+                czyObiektON = ui->radioObiektStart->isChecked();
+                emit setTaktowanieObustronne(czyObiektON, ui->doubleSpinBoxTaktowanieObiektu->value());
+            }
+            else
+            {
+                emit setTaktowanieJednostronne();
+
+            }
+
         }
     }
+    else
+    {
+        emit setLocalLoop();
+        interval = ui->interval->value();
+
+        emit setLoop(ui->interval->value() * 1000);
+    }
+
 }
 
 
@@ -516,8 +584,6 @@ void GUI::on_testConnect_clicked(){
     emit testConnectionRequest();
 }
 
-<<<<<<< Updated upstream
-=======
 void GUI::setGreenLight()
 {
     connectionIndicator->setStyleSheet(
@@ -548,7 +614,6 @@ void GUI::networkDisconnected()
     on_networkConfirm_clicked();
 }
 
->>>>>>> Stashed changes
 
 
 // void GUI::startServer() {
