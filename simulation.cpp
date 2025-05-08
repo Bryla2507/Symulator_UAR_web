@@ -61,6 +61,7 @@ void Simulation::connectBackendFrontend()
 
     QObject::connect(&loop, &LoopSystem::setGreenLight, &gui, &GUI::setGreenLight);
     QObject::connect(&loop, &LoopSystem::setRedLight, &gui, &GUI::setRedLight);
+    QObject::connect(&loop, &LoopSystem::networkDisconnected, &gui, &GUI::networkDisconnected);
 
 
 }
