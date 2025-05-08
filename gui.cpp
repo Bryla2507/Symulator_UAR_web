@@ -564,6 +564,7 @@ void GUI::on_networkConfirm_clicked()
             else
             {
                 emit setTaktowanieJednostronne();
+
             }
 
         }
@@ -571,6 +572,9 @@ void GUI::on_networkConfirm_clicked()
     else
     {
         emit setLocalLoop();
+        interval = ui->interval->value();
+
+        emit setLoop(ui->interval->value() * 1000);
     }
 
 }
