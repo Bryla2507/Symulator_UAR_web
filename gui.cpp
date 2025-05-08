@@ -516,6 +516,39 @@ void GUI::on_testConnect_clicked(){
     emit testConnectionRequest();
 }
 
+<<<<<<< Updated upstream
+=======
+void GUI::setGreenLight()
+{
+    connectionIndicator->setStyleSheet(
+        "QLabel#connectionIndicator { background-color: rgb(0, 255, 0); }"
+        );
+    //qDebug() << "zmiana koloru";
+    QPalette zielony = connectionIndicator->palette();
+    zielony.setColor(QPalette::Window, QColor(Qt::green));
+    connectionIndicator->setPalette(zielony);
+}
+
+void GUI::setRedLight()
+{
+    connectionIndicator->setStyleSheet(
+        "QLabel#connectionIndicator { background-color: rgb(255, 0, 0); }"
+        );
+    //qDebug() << "zmiana koloru";
+    QPalette czerwony = connectionIndicator->palette();
+    czerwony.setColor(QPalette::Window, QColor(Qt::red));
+    connectionIndicator->setPalette(czerwony);
+}
+`
+void GUI::networkDisconnected()
+{
+    QMessageBox::warning(this, "Rozłączono", "Połączenie sieciowe zostało zerwane. Przełączono na tryb lokalny.");
+    ui->radioNetwork->setChecked(false);
+    ui->radioLocal->setChecked(true);
+    on_networkConfirm_clicked();
+}
+
+>>>>>>> Stashed changes
 
 
 // void GUI::startServer() {

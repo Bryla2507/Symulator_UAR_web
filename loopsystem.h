@@ -38,10 +38,19 @@ signals:
     void updateGUIControls(SignalType s, double a, double per, double f, double p, double i,
                            double d, bool win, double min, double max, int k, std::vector<double> ca, std::vector<double> cb,
                            double z, double sf, double cc);
+<<<<<<< Updated upstream
+=======
+    void sendObjectValueToChart(double value);
+    void setRedLight();
+    void setGreenLight();
+    void networkDisconnected();
+>>>>>>> Stashed changes
 
 private:
     void init();
     void newConnection();
+    bool networkWasDisconnected = false;    //flaga sprawdzajaca czy polaczenie zostalo zerwane
+
 
     // funkcje pętli sprzężenia zwrotnego
     void connectLoopSignals();

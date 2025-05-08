@@ -51,6 +51,19 @@ void Simulation::connectBackendFrontend()
     QObject::connect(&gui, &GUI::startServerRequest, &loop, &LoopSystem::startServer);
     QObject::connect(&gui, &GUI::testConnectionRequest, &loop, &LoopSystem::testConnection);
     QObject::connect(&gui, &GUI::clientSocketCreated, &loop, &LoopSystem::setClientSocket);
+<<<<<<< Updated upstream
+=======
+    QObject::connect(&gui, &GUI::resetConnection, &loop, &LoopSystem::resetConnection);
+
+    QObject::connect(&gui, &GUI::setTaktowanieJednostronne, &loop, &LoopSystem::setTaktowanieJednostronne);
+    QObject::connect(&gui, &GUI::setTaktowanieObustronne, &loop, &LoopSystem::setTaktowanieObustronne);
+    QObject::connect(&gui, &GUI::setLocalLoop, &loop, &LoopSystem::setLoop);
+
+    QObject::connect(&loop, &LoopSystem::setGreenLight, &gui, &GUI::setGreenLight);
+    QObject::connect(&loop, &LoopSystem::setRedLight, &gui, &GUI::setRedLight);
+    QObject::connect(&loop, &LoopSystem::networkDisconnected, &gui, &GUI::networkDisconnected);
+
+>>>>>>> Stashed changes
 
 
 }

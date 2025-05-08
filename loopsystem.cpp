@@ -55,6 +55,35 @@ void LoopSystem::executeLoop()
         // Serwer
         qDebug() << "serwer czeka na dane";
         if (serverSocket->bytesAvailable()) {
+<<<<<<< Updated upstream
+=======
+
+            int bytesAvailable = serverSocket->bytesAvailable();
+            if(bytesAvailable >= sizeof(double))
+            {
+                emit setGreenLight(); networkWasDisconnected = false;   //reset flagi bo polaczenie jest aktywne
+
+                qDebug() << "serwer ma dostępne dane";
+                int bytesToSkip = bytesAvailable - sizeof(double);
+
+                QDataStream in;
+                in.setDevice(serverSocket);
+
+                in.skipRawData(bytesToSkip);
+
+                double receivedValue;
+                in >> receivedValue;
+                qDebug() << "[Server] Otrzymano od klienta:" << receivedValue;
+                objectValue = receivedValue;
+                networkWasDisconnected = false;
+            }
+
+            // odbieranie danych z klienta na serwerze
+
+
+
+            /*
+>>>>>>> Stashed changes
             qDebug() << "serwer ma dostępne dane";
             QByteArray data = serverSocket->readAll();
             QString str = QString::fromUtf8(data).trimmed();
@@ -65,11 +94,29 @@ void LoopSystem::executeLoop()
                 wantedValue = receivedValue;
             }
         }
+<<<<<<< Updated upstream
+=======
+        else
+        {
+            emit setRedLight();
+            if (!networkWasDisconnected) {
+                emit networkDisconnected();
+                networkWasDisconnected = true;
+            }
+        }
+
+        wantedValue = generator.simulate(loopInterval);
+        deviation = wantedValue - objectValue;
+        PID_ResponseValue = regulator.simulate(deviation);
+
+        emit sendObjectValueToChart(objectValue);
+>>>>>>> Stashed changes
 
     } else if (clientSocket && clientSocket->state() == QAbstractSocket::ConnectedState) {
         // Klient
         qDebug() << "klient czeka na dane";
         if (clientSocket->bytesAvailable()) {
+<<<<<<< Updated upstream
             qDebug() << "klient ma dostępne dane";
             QByteArray data = clientSocket->readAll();
             QString str = QString::fromUtf8(data).trimmed();
@@ -78,6 +125,47 @@ void LoopSystem::executeLoop()
             if (ok) {
                 qDebug() << "[Client] Otrzymano od serwera:" << receivedValue;
                 wantedValue = receivedValue;
+=======
+            int bytesAvailable = clientSocket->bytesAvailable();
+            if(bytesAvailable >= (sizeof(double)+sizeof(qint32)+sizeof(bool)))
+            {
+                double receivedValue;
+
+                qDebug() << "klient ma dostępne dane";
+                int bytesToSkip = bytesAvailable - (sizeof(double)+sizeof(qint32)+sizeof(bool));
+
+                QDataStream in;
+                in.setDevice(clientSocket);
+
+                in.skipRawData(bytesToSkip);
+
+                in >> taktowanieObiektuOnline >> czyObiektOnlineDziala >> receivedValue;
+                qDebug() << receivedValue;
+                qDebug() << czyObiektOnlineDziala;
+                qDebug() << taktowanieObiektuOnline;
+
+                 networkWasDisconnected = false;    //reset flagi bo polaczenie jest aktywne
+
+
+                if(czyObiektOnlineDziala) // jeśli odebrano włączony
+                {
+                    setLoopInterval(taktowanieObiektuOnline);
+                    //loopInterval = taktowanieObiektuOnline;
+
+
+                    qDebug() << "[Client] Otrzymano od serwera:" << receivedValue;
+                    PID_ResponseValue = receivedValue;
+
+                    objectValue = object.simulate(PID_ResponseValue);
+                }
+                else
+                {
+                    setLoopInterval(15);
+                    //loopInterval = 15;
+                }
+
+
+>>>>>>> Stashed changes
             }
         }
 
@@ -115,8 +203,16 @@ void LoopSystem::startServer(int port)
             qDebug() << "Server could not start!";
         } else {
             qDebug() << "Server started on port" << port;
+
+            networkWasDisconnected = false;    //reset flagi bo polaczenie jest aktywne
         }
     }
+<<<<<<< Updated upstream
+=======
+    localLoop = loopRunning;
+
+
+>>>>>>> Stashed changes
 }
 
 void LoopSystem::newConnection()
@@ -156,6 +252,52 @@ void LoopSystem::setClientSocket(QTcpSocket* socket)
     connect(clientSocket, &QTcpSocket::connected, []() {
         qDebug() << "Połączono z serwerem";
     });
+<<<<<<< Updated upstream
+=======
+    localLoop = loopRunning;
+    loopRunning = false;
+    startLoop();
+
+    networkWasDisconnected = false;    //reset flagi bo polaczenie jest aktywne
+}
+
+void LoopSystem::resetConnection()
+{
+
+
+
+
+    if(server != nullptr)
+    {
+        server->disconnect();
+        server->close();
+
+
+    }
+
+    if(clientSocket != nullptr)
+    {
+        clientSocket->disconnectFromHost();
+        clientSocket->close();
+
+    }
+}
+
+void LoopSystem::setLoop()
+{
+    if(localLoop == true)
+    {
+        qDebug() << localLoop;
+        loopRunning = false;
+        startLoop();
+    }
+    else
+    {
+        qDebug() << localLoop;
+        loopRunning = true;
+        startLoop();
+    }
+>>>>>>> Stashed changes
 }
 
 
