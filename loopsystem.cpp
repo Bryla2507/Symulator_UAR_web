@@ -61,7 +61,7 @@ void LoopSystem::executeLoop()
         qDebug() << block.toHex();
         QByteArray packet;
         QDataStream packetStream(&packet, QIODevice::WriteOnly);
-        packetStream.setVersion(QDataStream::Qt_6_9);
+        packetStream.setVersion(QDataStream::Qt_DefaultCompiledVersion);
         packetStream << static_cast<quint32>(block.size());
         packet.append(block);
 
