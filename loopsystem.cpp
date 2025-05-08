@@ -51,7 +51,7 @@ void LoopSystem::executeLoop()
     // clientSocket trzyma dane o serwerze w instancji klienta
     // serverSocket powinien wysyłać dane z regulatora, a odbierać z obiektu
     // clientSocket powinien wysyłać dane z obiektu, a odbierać z regulatora
-    if (server && server->isListening() && serverSocket && serverSocket->state() == QAbstractSocket::ConnectedState) {
+    if ((server != nullptr) && (serverSocket != nullptr) && (serverSocket->state() == QAbstractSocket::ConnectedState) && server->isListening()) {
         // Serwer
 
         // block odpowiedzialny za wysłanie danych z regulatora
@@ -120,14 +120,16 @@ void LoopSystem::executeLoop()
     } else if (clientSocket && clientSocket->state() == QAbstractSocket::ConnectedState) {
         // Klient
 
-        //
 
+        //
+        qDebug() << clientSocket->peerAddress();
         QByteArray block;
         QDataStream out(&block, QIODevice::WriteOnly);
         out << objectValue;
         clientSocket->write(block);
 
         qDebug() << "klient czeka na dane";
+        qDebug() << clientSocket->state();
         if (clientSocket->bytesAvailable()) {
             int bytesAvailable = clientSocket->bytesAvailable();
             if(bytesAvailable >= (sizeof(double)+sizeof(qint32)+sizeof(bool)))
@@ -224,6 +226,8 @@ void LoopSystem::startServer(int port)
         server = new QTcpServer(this);
         connect(server, &QTcpServer::newConnection, this, &LoopSystem::newConnection);
     }
+    else
+        connect(server, &QTcpServer::newConnection, this, &LoopSystem::newConnection);
 
     if (!server->isListening()) {
         if (!server->listen(QHostAddress::Any, port)) {
@@ -232,6 +236,7 @@ void LoopSystem::startServer(int port)
             qDebug() << "Server started on port" << port;
         }
     }
+    localLoop = loopRunning;
 }
 
 void LoopSystem::newConnection()
@@ -266,20 +271,55 @@ void LoopSystem::testConnection()
     }
 }
 
-void LoopSystem::setClientSocket(QTcpSocket* socket)
+void LoopSystem::setClientSocket(QString ip, int port)
 {
-    this->clientSocket = socket;
+    if(clientSocket == nullptr)
+        this->clientSocket = new QTcpSocket(this);
+    clientSocket->connectToHost(ip, port);
     connect(clientSocket, &QTcpSocket::connected, []() {
         qDebug() << "Połączono z serwerem";
     });
+    localLoop = loopRunning;
+    loopRunning = false;
+    startLoop();
 }
 
 void LoopSystem::resetConnection()
 {
+
+
+
+
     if(server != nullptr)
+    {
+        server->disconnect();
         server->close();
+
+
+    }
+
     if(clientSocket != nullptr)
+    {
         clientSocket->disconnectFromHost();
+        clientSocket->close();
+
+    }
+}
+
+void LoopSystem::setLoop()
+{
+    if(localLoop == true)
+    {
+        qDebug() << localLoop;
+        loopRunning = false;
+        startLoop();
+    }
+    else
+    {
+        qDebug() << localLoop;
+        loopRunning = true;
+        startLoop();
+    }
 }
 
 

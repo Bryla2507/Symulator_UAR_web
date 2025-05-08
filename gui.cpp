@@ -504,9 +504,9 @@ void GUI::on_networkConfirm_clicked()
             if(ui->textIP->toPlainText()=="")
                 ui->textIP->setText("localhost");
 
-            clientSocket = new QTcpSocket(this);
-            clientSocket->connectToHost(ui->textIP->toPlainText(), ui->textPort->toPlainText().toInt());
-            emit clientSocketCreated(clientSocket);
+            //clientSocket = new QTcpSocket(this);
+            //clientSocket->connectToHost(ui->textIP->toPlainText(), ui->textPort->toPlainText().toInt());
+            emit clientSocketCreated(ui->textIP->toPlainText(), ui->textPort->toPlainText().toInt());
             connect(clientSocket, &QTcpSocket::connected, []() {
                 qDebug() << "Połączono z serwerem";
             });
@@ -537,6 +537,10 @@ void GUI::on_networkConfirm_clicked()
 
         }
     }
+    else
+    {
+        emit setLocalLoop();
+    }
 
 }
 
@@ -550,7 +554,7 @@ void GUI::setGreenLight()
     connectionIndicator->setStyleSheet(
         "QLabel#connectionIndicator { background-color: rgb(0, 255, 0); }"
         );
-    qDebug() << "zmiana koloru";
+    //qDebug() << "zmiana koloru";
     QPalette zielony = connectionIndicator->palette();
     zielony.setColor(QPalette::Window, QColor(Qt::green));
     connectionIndicator->setPalette(zielony);
@@ -561,7 +565,7 @@ void GUI::setRedLight()
     connectionIndicator->setStyleSheet(
         "QLabel#connectionIndicator { background-color: rgb(255, 0, 0); }"
         );
-    qDebug() << "zmiana koloru";
+    //qDebug() << "zmiana koloru";
     QPalette czerwony = connectionIndicator->palette();
     czerwony.setColor(QPalette::Window, QColor(Qt::red));
     connectionIndicator->setPalette(czerwony);

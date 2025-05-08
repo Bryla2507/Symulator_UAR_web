@@ -59,10 +59,11 @@ signals:
     void resetGeneratorTime();
     void saveSimulation(QString filePath);
     void loadSimulation(QString filePath);
+    void setLocalLoop();
 
     void startServerRequest(int port);
     void testConnectionRequest();
-    void clientSocketCreated(QTcpSocket* socket);
+    void clientSocketCreated(QString, int);
     void serverSocketCreated(QTcpSocket* socket);
     void resetConnection();
 
