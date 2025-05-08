@@ -244,6 +244,7 @@ void LoopSystem::startServer(int port)
 void LoopSystem::newConnection()
 {
     serverSocket = server->nextPendingConnection();
+    connect(serverSocket, &QTcpSocket::stateChanged, this, &LoopSystem::onClientSocketStateChanged);
     qDebug() << "New connection established!";
 
 }
