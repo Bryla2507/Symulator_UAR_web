@@ -110,10 +110,10 @@ void LoopSystem::executeLoop()
         {
             emit setRedLight();
 
-            if (!networkWasDisconnected) {
-                emit networkDisconnected();
-                networkWasDisconnected = true;
-            }
+            // if (!networkWasDisconnected) {
+            //     emit networkDisconnected();
+            //     networkWasDisconnected = true;
+            // }
         }
 
         wantedValue = generator.simulate(loopInterval);
@@ -240,7 +240,7 @@ void LoopSystem::startServer(int port)
             qDebug() << "Server could not start!";
         } else {
             qDebug() << "Server started on port" << port;
-            networkWasDisconnected = false;    //reset flagi bo polaczenie jest aktywne
+            //networkWasDisconnected = false;    //reset flagi bo polaczenie jest aktywne
         }
     }
     localLoop = loopRunning;
@@ -286,6 +286,9 @@ void LoopSystem::setClientSocket(QString ip, int port)
     connect(clientSocket, &QTcpSocket::connected, []() {
         qDebug() << "Połączono z serwerem";
     });
+
+    connect(clientSocket, &QTcpSocket::stateChanged, this, &LoopSystem::onClientSocketStateChanged);
+
     localLoop = loopRunning;
     loopRunning = false;
     startLoop();
@@ -328,6 +331,16 @@ void LoopSystem::setLoop()
         qDebug() << localLoop;
         loopRunning = true;
         startLoop();
+    }
+}
+
+void LoopSystem::onClientSocketStateChanged(QAbstractSocket::SocketState state)
+{
+    if (state == QAbstractSocket::UnconnectedState) {
+        if (!networkWasDisconnected) {
+            emit networkDisconnected();
+            networkWasDisconnected = true;
+        }
     }
 }
 

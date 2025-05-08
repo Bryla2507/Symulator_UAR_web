@@ -37,6 +37,8 @@ public slots:
     void setTaktowanieJednostronne();
     void setTaktowanieObustronne(bool, double);
     void setLoop();
+    void onClientSocketStateChanged(QAbstractSocket::SocketState state);
+
 
 signals:
     void updateGUIControls(SignalType s, double a, double per, double f, double p, double i,
