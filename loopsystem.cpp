@@ -333,10 +333,10 @@ void LoopSystem::setLoop()
 void LoopSystem::onClientSocketStateChanged(QAbstractSocket::SocketState state)
 {
     if (state == QAbstractSocket::UnconnectedState) {
-        //if (!networkWasDisconnected) {    //sprawdzanie flagi, na razie wersja bez
+        if (!networkWasDisconnected) {    //sprawdzanie flagi, na razie wersja bez
             emit networkDisconnected();
             networkWasDisconnected = true;
-       // }
+        }
     }
 }
 
