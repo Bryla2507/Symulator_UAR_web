@@ -109,11 +109,6 @@ void LoopSystem::executeLoop()
         else
         {
             emit setRedLight();
-
-            // if (!networkWasDisconnected) {
-            //     emit networkDisconnected();
-            //     networkWasDisconnected = true;
-            // }
         }
 
         wantedValue = generator.simulate(loopInterval);
@@ -337,10 +332,10 @@ void LoopSystem::setLoop()
 void LoopSystem::onClientSocketStateChanged(QAbstractSocket::SocketState state)
 {
     if (state == QAbstractSocket::UnconnectedState) {
-        if (!networkWasDisconnected) {
+        //if (!networkWasDisconnected) {    //sprawdzanie flagi, na razie wersja bez
             emit networkDisconnected();
             networkWasDisconnected = true;
-        }
+       // }
     }
 }
 
