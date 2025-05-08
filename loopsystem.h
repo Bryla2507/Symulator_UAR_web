@@ -73,7 +73,7 @@ private:
 
     // pola dotyczące samego wykonywania pętli
     bool loopRunning;
-    bool localLoop;
+    bool localLoop = true;
     double loopInterval;
     QTimer* loopTimer;
 
