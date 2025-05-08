@@ -37,6 +37,8 @@ public slots:
     void setTaktowanieJednostronne();
     void setTaktowanieObustronne(bool, double);
     void setLoop();
+    void onClientSocketStateChanged(QAbstractSocket::SocketState state);
+
 
 signals:
     void updateGUIControls(SignalType s, double a, double per, double f, double p, double i,
@@ -45,10 +47,12 @@ signals:
     void sendObjectValueToChart(double value);
     void setRedLight();
     void setGreenLight();
+    void networkDisconnected();
 
 private:
     void init();
     void newConnection();
+    bool networkWasDisconnected = false;    //flaga sprawdzajaca czy polaczenie zostalo zerwane
 
     // funkcje pętli sprzężenia zwrotnego
     void connectLoopSignals();

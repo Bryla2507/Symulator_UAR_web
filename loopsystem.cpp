@@ -75,7 +75,7 @@ void LoopSystem::executeLoop()
             int bytesAvailable = serverSocket->bytesAvailable();
             if(bytesAvailable >= sizeof(double))
             {
-                emit setGreenLight();
+                emit setGreenLight(); networkWasDisconnected = false;   //reset flagi bo polaczenie jest aktywne
                 qDebug() << "serwer ma dostępne dane";
                 int bytesToSkip = bytesAvailable - sizeof(double);
 
@@ -149,6 +149,7 @@ void LoopSystem::executeLoop()
                 qDebug() << czyObiektOnlineDziala;
                 qDebug() << taktowanieObiektuOnline;
 
+                networkWasDisconnected = false;    //reset flagi bo polaczenie jest aktywne
 
                 if(czyObiektOnlineDziala) // jeśli odebrano włączony
                 {
@@ -234,6 +235,7 @@ void LoopSystem::startServer(int port)
             qDebug() << "Server could not start!";
         } else {
             qDebug() << "Server started on port" << port;
+            //networkWasDisconnected = false;    //reset flagi bo polaczenie jest aktywne
         }
     }
     localLoop = loopRunning;
@@ -242,6 +244,7 @@ void LoopSystem::startServer(int port)
 void LoopSystem::newConnection()
 {
     serverSocket = server->nextPendingConnection();
+    connect(serverSocket, &QTcpSocket::stateChanged, this, &LoopSystem::onClientSocketStateChanged);
     qDebug() << "New connection established!";
 
 }
@@ -279,9 +282,14 @@ void LoopSystem::setClientSocket(QString ip, int port)
     connect(clientSocket, &QTcpSocket::connected, []() {
         qDebug() << "Połączono z serwerem";
     });
+
+    connect(clientSocket, &QTcpSocket::stateChanged, this, &LoopSystem::onClientSocketStateChanged);
+
     localLoop = loopRunning;
     loopRunning = false;
     startLoop();
+
+    networkWasDisconnected = false;    //reset flagi bo polaczenie jest aktywne
 }
 
 void LoopSystem::resetConnection()
@@ -319,6 +327,16 @@ void LoopSystem::setLoop()
         qDebug() << localLoop;
         loopRunning = true;
         startLoop();
+    }
+}
+
+void LoopSystem::onClientSocketStateChanged(QAbstractSocket::SocketState state)
+{
+    if (state == QAbstractSocket::UnconnectedState) {
+        //if (!networkWasDisconnected) {    //sprawdzanie flagi, na razie wersja bez
+            emit networkDisconnected();
+            networkWasDisconnected = true;
+       // }
     }
 }
 

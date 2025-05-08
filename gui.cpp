@@ -605,6 +605,14 @@ void GUI::setRedLight()
     czerwony.setColor(QPalette::Window, QColor(Qt::red));
     connectionIndicator->setPalette(czerwony);
 }
+void GUI::networkDisconnected()
+{
+
+    ui->radioNetwork->setChecked(false);
+    ui->radioLocal->setChecked(true);
+    on_networkConfirm_clicked();
+    QMessageBox::warning(this, "Rozłączono", "Połączenie sieciowe zostało zerwane. Przełączono na tryb lokalny.");
+}
 
 
 // void GUI::startServer() {
