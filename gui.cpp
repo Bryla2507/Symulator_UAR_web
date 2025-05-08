@@ -472,12 +472,26 @@ void setHorizontalLayout(QHBoxLayout* layout, bool var) {
 void GUI::on_networkConfirm_clicked()
 {
     setGridLayout(ui->gridLayout_3, true);
+    setGridLayout(ui->gridLayout_2, true);
+    setGridLayout(ui->gridLayout_4, true);
+    setHorizontalLayout(ui->horizontalLayout_18, true);
+    setHorizontalLayout(ui->horizontalLayout_19, true);
+    setHorizontalLayout(ui->horizontalLayout_20, true);
+    setHorizontalLayout(ui->horizontalLayout_22, true);
+
+    setHorizontalLayout(ui->horizontalLayout_5, true);
+    setHorizontalLayout(ui->horizontalLayout_6, true);
+    setHorizontalLayout(ui->horizontalLayout_8, true);
+
     setHorizontalLayout(ui->horizontalLayout_9, true);
     setHorizontalLayout(ui->horizontalLayout_10, true);
     setHorizontalLayout(ui->horizontalLayout_11, true);
     setHorizontalLayout(ui->horizontalLayout_12, true);
     setHorizontalLayout(ui->horizontalLayout_13, true);
     setHorizontalLayout(ui->horizontalLayout_14, true);
+    setHorizontalLayout(ui->horizontalLayout_17, true);
+    setHorizontalLayout(ui->horizontalLayout_23, true);
+    setHorizontalLayout(ui->horizontalLayout_24, true);
     setGridLayout(ui->gridLayout, true);
 
     emit resetConnection();
@@ -492,12 +506,29 @@ void GUI::on_networkConfirm_clicked()
         if(ui->listWidgetClientServer->currentItem()==ui->listWidgetClientServer->item(1))
         {
             setGridLayout(ui->gridLayout_3, false);
+            setGridLayout(ui->gridLayout_2, false);
+            setGridLayout(ui->gridLayout_4, false);
             setHorizontalLayout(ui->horizontalLayout_9, false);
             setHorizontalLayout(ui->horizontalLayout_10, false);
             setHorizontalLayout(ui->horizontalLayout_11, false);
             setHorizontalLayout(ui->horizontalLayout_12, false);
             setHorizontalLayout(ui->horizontalLayout_13, false);
             setHorizontalLayout(ui->horizontalLayout_14, false);
+
+            setHorizontalLayout(ui->horizontalLayout_18, false);
+            setHorizontalLayout(ui->horizontalLayout_19, false);
+            setHorizontalLayout(ui->horizontalLayout_20, false);
+            setHorizontalLayout(ui->horizontalLayout_22, false);
+
+            setHorizontalLayout(ui->horizontalLayout_17, false);
+            setHorizontalLayout(ui->horizontalLayout_23, false);
+            setHorizontalLayout(ui->horizontalLayout_24, false);
+
+            setHorizontalLayout(ui->horizontalLayout_5, false);
+            setHorizontalLayout(ui->horizontalLayout_6, false);
+            setHorizontalLayout(ui->horizontalLayout_8, false);
+
+
 
             if(ui->textPort->toPlainText()=="")
                 ui->textPort->setText("25565");

@@ -32,10 +32,11 @@ public slots:
     void executeLoop();
     void startServer(int port);
     void testConnection();
-    void setClientSocket(QTcpSocket* socket);
+    void setClientSocket(QString, int);
     void resetConnection();
     void setTaktowanieJednostronne();
     void setTaktowanieObustronne(bool, double);
+    void setLoop();
 
 signals:
     void updateGUIControls(SignalType s, double a, double per, double f, double p, double i,
@@ -68,6 +69,7 @@ private:
 
     // pola dotyczące samego wykonywania pętli
     bool loopRunning;
+    bool localLoop;
     double loopInterval;
     QTimer* loopTimer;
 
