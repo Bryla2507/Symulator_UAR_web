@@ -40,6 +40,16 @@ void Simulation::connectBackendFrontend()
     QObject::connect(object, &ARX_Model::sendObjectValueToChart, &gui, &GUI::updateObjectSerie);
     // duplikowanie sygnału tak, aby przy braku użycia modelu ARX (serwer) wykresy przyjmowały wartości z klienta
     QObject::connect(&loop, &LoopSystem::sendObjectValueToChart, &gui, &GUI::updateObjectSerie);
+
+    //to samo dla klientaa
+    QObject::connect(&loop, &LoopSystem::sendPIDValueToChart, &gui, &GUI::updatePIDSeries);
+    QObject::connect(&loop, &LoopSystem::sendDeviationValueToChart, &gui, &GUI::updateDeviationSerie);
+    QObject::connect(&loop, &LoopSystem::sendWantedValueToChart, &gui, &GUI::updateGeneratorSerie);
+    //QObject::connect(&loop, &LoopSystem::sendWantedValueToChart, &gui, &GUI::updatePIDSeries);
+
+
+
+
     QObject::connect(&gui, &GUI::newModelParameters, object, &ARX_Model::setModelParameters);
 
     QObject::connect(&gui, &GUI::startStop, &loop, &LoopSystem::startLoop);

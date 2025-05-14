@@ -57,7 +57,7 @@ void LoopSystem::executeLoop()
         // block odpowiedzialny za wysłanie danych z regulatora
         QByteArray block;
         QDataStream out(&block, QIODevice::WriteOnly);
-        out << static_cast<qint32>(taktowanieObiektuOnline) << czyObiektOnlineDziala << PID_ResponseValue;
+        out << static_cast<qint32>(taktowanieObiektuOnline) << czyObiektOnlineDziala << PID_ResponseValue << wantedValue;
         qDebug() << block.toHex();
         QByteArray packet;
         QDataStream packetStream(&packet, QIODevice::WriteOnly);
@@ -132,19 +132,20 @@ void LoopSystem::executeLoop()
         qDebug() << clientSocket->state();
         if (clientSocket->bytesAvailable()) {
             int bytesAvailable = clientSocket->bytesAvailable();
-            if(bytesAvailable >= (sizeof(double)+sizeof(qint32)+sizeof(bool)))
+            if(bytesAvailable >= (sizeof(double)+sizeof(qint32)+sizeof(bool)+sizeof(double)))
             {
                 double receivedValue;
+                double wantedValueClient;
 
                 qDebug() << "klient ma dostępne dane";
-                int bytesToSkip = bytesAvailable - (sizeof(double)+sizeof(qint32)+sizeof(bool));
+                int bytesToSkip = bytesAvailable - (sizeof(double)+sizeof(qint32)+sizeof(bool)+sizeof(double));
 
                 QDataStream in;
                 in.setDevice(clientSocket);
 
                 in.skipRawData(bytesToSkip);
 
-                in >> taktowanieObiektuOnline >> czyObiektOnlineDziala >> receivedValue;
+                in >> taktowanieObiektuOnline >> czyObiektOnlineDziala >> receivedValue >> wantedValueClient;
                 qDebug() << receivedValue;
                 qDebug() << czyObiektOnlineDziala;
                 qDebug() << taktowanieObiektuOnline;
@@ -161,12 +162,18 @@ void LoopSystem::executeLoop()
                     PID_ResponseValue = receivedValue;
 
                     objectValue = object.simulate(PID_ResponseValue);
+
+                    emit sendPIDValueToChart(0,0,0,PID_ResponseValue);
+                    emit sendWantedValueToChart(wantedValueClient);
+                    emit sendDeviationValueToChart(0);
+
                 }
                 else
                 {
                     setLoopInterval(15);
                     //loopInterval = 15;
                 }
+                emit setGreenLight();
 
 
             }

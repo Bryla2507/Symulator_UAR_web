@@ -45,6 +45,10 @@ signals:
                            double d, bool win, double min, double max, int k, std::vector<double> ca, std::vector<double> cb,
                            double z, double sf, double cc);
     void sendObjectValueToChart(double value);
+    void sendPIDValueToChart(double value1, double value2, double value3, double output);
+    void sendDeviationValueToChart(double value);
+    void sendWantedValueToChart(double value);
+
     void setRedLight();
     void setGreenLight();
     void networkDisconnected();
@@ -67,6 +71,7 @@ private:
     double objectValue;
     double deviation;
     double PID_ResponseValue;
+
 
     bool czyObiektOnlineDziala;
     qint32 taktowanieObiektuOnline;
