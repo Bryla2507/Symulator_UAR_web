@@ -1150,6 +1150,9 @@
               <property name="checked">
                <bool>true</bool>
               </property>
+              <attribute name="buttonGroup">
+               <string notr="true">buttonGroup_3</string>
+              </attribute>
              </widget>
             </item>
             <item>
@@ -1163,6 +1166,9 @@
               <property name="text">
                <string>Sinusoidalny</string>
               </property>
+              <attribute name="buttonGroup">
+               <string notr="true">buttonGroup_3</string>
+              </attribute>
              </widget>
             </item>
             <item>
@@ -1176,6 +1182,9 @@
               <property name="text">
                <string>Skok jednostkowy</string>
               </property>
+              <attribute name="buttonGroup">
+               <string notr="true">buttonGroup_3</string>
+              </attribute>
              </widget>
             </item>
            </layout>
@@ -6430,7 +6439,7 @@
      <x>0</x>
      <y>0</y>
      <width>1220</width>
-     <height>25</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
@@ -6441,5 +6450,6 @@
  <buttongroups>
   <buttongroup name="buttonGroup"/>
   <buttongroup name="buttonGroup_2"/>
+  <buttongroup name="buttonGroup_3"/>
  </buttongroups>
 </ui>

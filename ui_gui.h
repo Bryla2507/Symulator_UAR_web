@@ -139,6 +139,7 @@ public:
     QStatusBar *statusbar;
     QButtonGroup *buttonGroup;
     QButtonGroup *buttonGroup_2;
+    QButtonGroup *buttonGroup_3;
 
     void setupUi(QMainWindow *GUI)
     {
@@ -430,6 +431,9 @@ public:
         horizontalLayout_24 = new QHBoxLayout();
         horizontalLayout_24->setObjectName("horizontalLayout_24");
         rectangular = new QRadioButton(centralwidget);
+        buttonGroup_3 = new QButtonGroup(GUI);
+        buttonGroup_3->setObjectName("buttonGroup_3");
+        buttonGroup_3->addButton(rectangular);
         rectangular->setObjectName("rectangular");
         sizePolicy1.setHeightForWidth(rectangular->sizePolicy().hasHeightForWidth());
         rectangular->setSizePolicy(sizePolicy1);
@@ -438,6 +442,7 @@ public:
         horizontalLayout_24->addWidget(rectangular);
 
         sinusoidal = new QRadioButton(centralwidget);
+        buttonGroup_3->addButton(sinusoidal);
         sinusoidal->setObjectName("sinusoidal");
         sizePolicy1.setHeightForWidth(sinusoidal->sizePolicy().hasHeightForWidth());
         sinusoidal->setSizePolicy(sizePolicy1);
@@ -445,6 +450,7 @@ public:
         horizontalLayout_24->addWidget(sinusoidal);
 
         jumpUnit = new QRadioButton(centralwidget);
+        buttonGroup_3->addButton(jumpUnit);
         jumpUnit->setObjectName("jumpUnit");
         sizePolicy1.setHeightForWidth(jumpUnit->sizePolicy().hasHeightForWidth());
         jumpUnit->setSizePolicy(sizePolicy1);
@@ -1581,7 +1587,7 @@ public:
         GUI->setCentralWidget(centralwidget);
         menubar = new QMenuBar(GUI);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 1220, 25));
+        menubar->setGeometry(QRect(0, 0, 1220, 21));
         GUI->setMenuBar(menubar);
         statusbar = new QStatusBar(GUI);
         statusbar->setObjectName("statusbar");

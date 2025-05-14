@@ -225,8 +225,26 @@ void GUI::incrementXAxis(Chart& chart) {
 void GUI::adjustYAxisRange(Chart& chart) {
     auto axisY = chart.chart->axes(Qt::Vertical).first();
 
+    double minY = std::numeric_limits<double>::max();
+    double maxY = std::numeric_limits<double>::lowest();
 
-    axisY->setRange(chart.minY, chart.maxY);
+    for (const auto& series : chart.series) {
+        const auto points = series->points();
+        for (const auto& point : points) {
+            const double y = point.y();
+            minY = std::min(minY, y);
+            maxY = std::max(maxY, y);
+        }
+    }
+
+    if (minY == std::numeric_limits<double>::max()) {
+        minY = 0;
+        maxY = 1;
+    }
+
+    const double margin = (maxY - minY) * 0.07;
+
+    axisY->setRange(minY - margin, maxY +  margin);
 }
 
 void GUI::appendData(Chart& chart, int seriesIndex, double value) {
