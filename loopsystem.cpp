@@ -170,7 +170,7 @@ void LoopSystem::executeLoop()
                 }
                 else
                 {
-                    setLoopInterval(15);
+                    setLoopInterval(10);
                     //loopInterval = 15;
                 }
                 emit setGreenLight();
@@ -213,7 +213,7 @@ void LoopSystem::setTaktowanieObustronne(bool czyObiektDziala, double intervalOb
 void LoopSystem::setTaktowanieJednostronne()
 {
     czyObiektOnlineDziala = true;
-    taktowanieObiektuOnline = 15;
+    taktowanieObiektuOnline = 10;
 }
 
 

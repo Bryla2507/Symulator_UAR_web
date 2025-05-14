@@ -224,6 +224,8 @@ void GUI::incrementXAxis(Chart& chart) {
 
 void GUI::adjustYAxisRange(Chart& chart) {
     auto axisY = chart.chart->axes(Qt::Vertical).first();
+
+
     axisY->setRange(chart.minY, chart.maxY);
 }
 
@@ -238,6 +240,8 @@ void GUI::appendData(Chart& chart, int seriesIndex, double value) {
     if (value < chart.minY) {
         chart.minY = value;
     }
+
+
 
     adjustYAxisRange(chart);
 }

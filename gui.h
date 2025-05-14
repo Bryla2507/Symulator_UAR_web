@@ -113,6 +113,8 @@ private:
     void incrementXAxis(Chart& chart);
     void adjustYAxisRange(Chart& chart);
 
+    std::vector<double> objectY;
+
 
    // void startServer();
     void newConnection();
