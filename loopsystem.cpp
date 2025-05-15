@@ -21,6 +21,11 @@ void LoopSystem::startLoop()
         loopRunning = false;
         loopTimer->stop();
     }
+    if((server != nullptr) && (serverSocket != nullptr))
+    {
+        sendStop();
+    }
+
 }
 
 void LoopSystem::setLoopInterval(double miliseconds)
@@ -45,6 +50,21 @@ ARX_Model &LoopSystem::getObject()
     return object;
 }
 
+void LoopSystem::sendStop()
+{
+    QByteArray block;
+    QDataStream out(&block, QIODevice::WriteOnly);
+    out << static_cast<qint32>(taktowanieObiektuOnline) << czyObiektOnlineDziala << PID_ResponseValue << wantedValue << loopRunning;
+    qDebug() << block.toHex();
+    QByteArray packet;
+    QDataStream packetStream(&packet, QIODevice::WriteOnly);
+    packetStream.setVersion(QDataStream::Qt_DefaultCompiledVersion);
+    packetStream << static_cast<quint32>(block.size());
+    packet.append(block);
+
+    serverSocket->write(packet);
+}
+
 void LoopSystem::executeLoop()
 {
     // serverSocket trzyma dane o kliencie w instancji serwera
@@ -57,7 +77,7 @@ void LoopSystem::executeLoop()
         // block odpowiedzialny za wysłanie danych z regulatora
         QByteArray block;
         QDataStream out(&block, QIODevice::WriteOnly);
-        out << static_cast<qint32>(taktowanieObiektuOnline) << czyObiektOnlineDziala << PID_ResponseValue << wantedValue;
+        out << static_cast<qint32>(taktowanieObiektuOnline) << czyObiektOnlineDziala << PID_ResponseValue << wantedValue << loopRunning;
         qDebug() << block.toHex();
         QByteArray packet;
         QDataStream packetStream(&packet, QIODevice::WriteOnly);
@@ -132,23 +152,24 @@ void LoopSystem::executeLoop()
         qDebug() << clientSocket->state();
         if (clientSocket->bytesAvailable()) {
             int bytesAvailable = clientSocket->bytesAvailable();
-            if(bytesAvailable >= (sizeof(double)+sizeof(qint32)+sizeof(bool)+sizeof(double)))
+            if(bytesAvailable >= (sizeof(double)+sizeof(qint32)+sizeof(bool)+sizeof(double)+sizeof(bool)))
             {
                 double receivedValue;
-                double wantedValueClient;
+
 
                 qDebug() << "klient ma dostępne dane";
-                int bytesToSkip = bytesAvailable - (sizeof(double)+sizeof(qint32)+sizeof(bool)+sizeof(double));
+                int bytesToSkip = bytesAvailable - (sizeof(double)+sizeof(qint32)+sizeof(bool)+sizeof(double)+sizeof(bool));
 
                 QDataStream in;
                 in.setDevice(clientSocket);
 
                 in.skipRawData(bytesToSkip);
-
-                in >> taktowanieObiektuOnline >> czyObiektOnlineDziala >> receivedValue >> wantedValueClient;
+                bool obiektStart;
+                in >> taktowanieObiektuOnline >> czyObiektOnlineDziala >> receivedValue >> wantedValueClient >> obiektStart;
                 qDebug() << receivedValue;
                 qDebug() << czyObiektOnlineDziala;
                 qDebug() << taktowanieObiektuOnline;
+
 
                 networkWasDisconnected = false;    //reset flagi bo polaczenie jest aktywne
 
@@ -178,6 +199,7 @@ void LoopSystem::executeLoop()
 
             }
 
+
             // odbieranie danych z serwera na kliencie
 
 
@@ -191,6 +213,28 @@ void LoopSystem::executeLoop()
             //    qDebug() << "[Client] Otrzymano od serwera:" << receivedValue;
             //    wantedValue = receivedValue;
             //}
+        }
+        else
+        {
+            emit setRedLight();
+            if(czyObiektOnlineDziala) // jeśli odebrano włączony
+            {
+                setLoopInterval(taktowanieObiektuOnline);
+                //loopInterval = taktowanieObiektuOnline;
+
+                objectValue = object.simulate(PID_ResponseValue);
+
+                emit sendPIDValueToChart(0,0,0,PID_ResponseValue);
+                emit sendWantedValueToChart(wantedValueClient);
+                emit sendDeviationValueToChart(0);
+
+            }
+            else
+            {
+
+                setLoopInterval(10);
+                //loopInterval = 15;
+            }
         }
 
     } else {
@@ -210,10 +254,10 @@ void LoopSystem::setTaktowanieObustronne(bool czyObiektDziala, double intervalOb
     taktowanieObiektuOnline = intervalObiektu*1000;
 }
 
-void LoopSystem::setTaktowanieJednostronne()
+void LoopSystem::setTaktowanieJednostronne(double intervalObiektu)
 {
     czyObiektOnlineDziala = true;
-    taktowanieObiektuOnline = 10;
+    taktowanieObiektuOnline = intervalObiektu;
 }
 
 

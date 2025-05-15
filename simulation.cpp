@@ -60,6 +60,7 @@ void Simulation::connectBackendFrontend()
     QObject::connect(&loop, &LoopSystem::updateGUIControls, &gui, &GUI::updateGUIControls);
 
 
+
     QObject::connect(&gui, &GUI::startServerRequest, &loop, &LoopSystem::startServer);
     QObject::connect(&gui, &GUI::testConnectionRequest, &loop, &LoopSystem::testConnection);
     QObject::connect(&gui, &GUI::clientSocketCreated, &loop, &LoopSystem::setClientSocket);

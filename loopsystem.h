@@ -34,7 +34,7 @@ public slots:
     void testConnection();
     void setClientSocket(QString, int);
     void resetConnection();
-    void setTaktowanieJednostronne();
+    void setTaktowanieJednostronne(double);
     void setTaktowanieObustronne(bool, double);
     void setLoop();
     void onClientSocketStateChanged(QAbstractSocket::SocketState state);
@@ -65,12 +65,14 @@ private:
     Generator generator;
     PID_Regulator regulator;
     ARX_Model object;
+    void sendStop();
 
     // wartosci
     double wantedValue;
     double objectValue;
     double deviation;
     double PID_ResponseValue;
+    double wantedValueClient;
 
 
     bool czyObiektOnlineDziala;
@@ -80,6 +82,7 @@ private:
     bool loopRunning;
     bool localLoop = true;
     double loopInterval;
+    bool obiektStartOld = true;
     QTimer* loopTimer;
 
 

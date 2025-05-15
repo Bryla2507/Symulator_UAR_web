@@ -378,6 +378,7 @@ void GUI::on_setLoop_clicked()
     interval = ui->interval->value();
 
     emit setLoop(ui->interval->value() * 1000);
+    emit setTaktowanieObustronne(true, ui->interval->value());
 }
 
 
@@ -585,7 +586,7 @@ void GUI::on_networkConfirm_clicked()
             }
             else
             {
-                emit setTaktowanieJednostronne();
+                emit setTaktowanieObustronne(true, ui->interval->value());
 
             }
 

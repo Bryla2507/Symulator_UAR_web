@@ -69,7 +69,7 @@ signals:
     void resetConnection();
 
     void setTaktowanieObustronne(bool czyObiektON, double intervalObiekt);
-    void setTaktowanieJednostronne();
+    void setTaktowanieJednostronne(double interval);
 
 
 private slots:
