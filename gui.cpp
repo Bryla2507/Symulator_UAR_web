@@ -350,6 +350,7 @@ void GUI::on_setModel_clicked()
 void GUI::on_startStop_clicked()
 {
     emit startStop();
+
 }
 
 
@@ -379,6 +380,7 @@ void GUI::on_setLoop_clicked()
 
     emit setLoop(ui->interval->value() * 1000);
     emit setTaktowanieObustronne(true, ui->interval->value());
+    on_networkConfirm_clicked();
 }
 
 

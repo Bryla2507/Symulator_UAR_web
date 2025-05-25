@@ -21,6 +21,7 @@ void LoopSystem::startLoop()
         loopRunning = false;
         loopTimer->stop();
     }
+    czyObiektOnlineDziala = !czyObiektOnlineDziala;
     if((server != nullptr) && (serverSocket != nullptr))
     {
         sendStop();
@@ -77,7 +78,8 @@ void LoopSystem::executeLoop()
         // block odpowiedzialny za wysłanie danych z regulatora
         QByteArray block;
         QDataStream out(&block, QIODevice::WriteOnly);
-        out << static_cast<qint32>(taktowanieObiektuOnline) << czyObiektOnlineDziala << PID_ResponseValue << wantedValue << loopRunning;
+        //czyObiektOnlineDziala = !czyObiektOnlineDziala;
+        out << static_cast<qint32>(taktowanieObiektuOnline) << czyObiektOnlineDziala << PID_ResponseValue << wantedValue << localLoop;
         qDebug() << block.toHex();
         QByteArray packet;
         QDataStream packetStream(&packet, QIODevice::WriteOnly);
@@ -177,16 +179,19 @@ void LoopSystem::executeLoop()
                 {
                     setLoopInterval(taktowanieObiektuOnline);
                     //loopInterval = taktowanieObiektuOnline;
+                    if(obiektStart)
+                    {
+                        qDebug() << "[Client] Otrzymano od serwera:" << receivedValue;
+                        PID_ResponseValue = receivedValue;
+
+                        objectValue = object.simulate(PID_ResponseValue);
+
+                        emit sendPIDValueToChart(0,0,0,PID_ResponseValue);
+                        emit sendWantedValueToChart(wantedValueClient);
+                        emit sendDeviationValueToChart(0);
+                    }
 
 
-                    qDebug() << "[Client] Otrzymano od serwera:" << receivedValue;
-                    PID_ResponseValue = receivedValue;
-
-                    objectValue = object.simulate(PID_ResponseValue);
-
-                    emit sendPIDValueToChart(0,0,0,PID_ResponseValue);
-                    emit sendWantedValueToChart(wantedValueClient);
-                    emit sendDeviationValueToChart(0);
 
                 }
                 else
