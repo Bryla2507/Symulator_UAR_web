@@ -179,7 +179,7 @@ void LoopSystem::executeLoop()
                 {
                     setLoopInterval(taktowanieObiektuOnline);
                     //loopInterval = taktowanieObiektuOnline;
-                    if(obiektStart)
+                    if(true)
                     {
                         qDebug() << "[Client] Otrzymano od serwera:" << receivedValue;
                         PID_ResponseValue = receivedValue;
