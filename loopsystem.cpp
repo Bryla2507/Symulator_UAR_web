@@ -113,20 +113,6 @@ void LoopSystem::executeLoop()
             }
 
             // odbieranie danych z klienta na serwerze
-
-
-
-            /*
-            qDebug() << "serwer ma dostępne dane";
-            QByteArray data = serverSocket->readAll();
-            QString str = QString::fromUtf8(data).trimmed();
-            bool ok = false;
-            double receivedValue = str.toDouble(&ok);
-            if (ok) {
-                qDebug() << "[Server] Otrzymano od klienta:" << receivedValue;
-                wantedValue = receivedValue;
-            }
-            */
         }
         else
         {
@@ -158,7 +144,6 @@ void LoopSystem::executeLoop()
             {
                 double receivedValue;
 
-
                 qDebug() << "klient ma dostępne dane";
                 int bytesToSkip = bytesAvailable - (sizeof(double)+sizeof(qint32)+sizeof(bool)+sizeof(double)+sizeof(bool));
 
@@ -172,15 +157,13 @@ void LoopSystem::executeLoop()
                 qDebug() << czyObiektOnlineDziala;
                 qDebug() << taktowanieObiektuOnline;
 
-
                 networkWasDisconnected = false;    //reset flagi bo polaczenie jest aktywne
 
                 if(czyObiektOnlineDziala) // jeśli odebrano włączony
                 {
                     setLoopInterval(taktowanieObiektuOnline);
                     //loopInterval = taktowanieObiektuOnline;
-                    if(true)
-                    {
+
                         qDebug() << "[Client] Otrzymano od serwera:" << receivedValue;
                         PID_ResponseValue = receivedValue;
 
@@ -189,10 +172,6 @@ void LoopSystem::executeLoop()
                         emit sendPIDValueToChart(0,0,0,PID_ResponseValue);
                         emit sendWantedValueToChart(wantedValueClient);
                         emit sendDeviationValueToChart(0);
-                    }
-
-
-
                 }
                 else
                 {
@@ -200,24 +179,10 @@ void LoopSystem::executeLoop()
                     //loopInterval = 15;
                 }
                 emit setGreenLight();
-
-
             }
-
-
             // odbieranie danych z serwera na kliencie
 
 
-
-
-            //QByteArray data = clientSocket->readAll();
-            //QString str = QString::fromUtf8(data).trimmed();
-            //bool ok = false;
-            //double receivedValue = str.toDouble(&ok);
-            //if (ok) {
-            //    qDebug() << "[Client] Otrzymano od serwera:" << receivedValue;
-            //    wantedValue = receivedValue;
-            //}
         }
         else
         {

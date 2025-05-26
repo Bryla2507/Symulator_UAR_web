@@ -553,7 +553,7 @@ void GUI::on_networkConfirm_clicked()
             setHorizontalLayout(ui->horizontalLayout_6, false);
             setHorizontalLayout(ui->horizontalLayout_8, false);
 
-
+            ui->doubleSpinBoxTaktowanieObiektu->setEnabled(false);
 
             if(ui->textPort->toPlainText()=="")
                 ui->textPort->setText("25565");
@@ -567,6 +567,7 @@ void GUI::on_networkConfirm_clicked()
                 qDebug() << "Połączono z serwerem";
             });
             ui->statusbar->showMessage("Używany adres serwera: " + ui->textIP->toPlainText() + "   Port: " + ui->textPort->toPlainText());
+
         }
 
         else
@@ -574,7 +575,7 @@ void GUI::on_networkConfirm_clicked()
             if(ui->textPort->toPlainText()=="")
                 ui->textPort->setText("25565");
             setGridLayout(ui->gridLayout, false);
-
+            ui->doubleSpinBoxTaktowanieObiektu->setEnabled(true);
 
             QString portText = ui->textPort->toPlainText();  // bo to QTextEdit
             int port = portText.toInt();
