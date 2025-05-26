@@ -554,6 +554,10 @@ void GUI::on_networkConfirm_clicked()
             setHorizontalLayout(ui->horizontalLayout_8, false);
 
             ui->doubleSpinBoxTaktowanieObiektu->setEnabled(false);
+            ui->radioJednostronne->setEnabled(false);
+            ui->radioObustronne->setEnabled(false);
+            ui->radioObiektStart->setEnabled(false);
+            ui->radioObiektStop->setEnabled(false);
 
             if(ui->textPort->toPlainText()=="")
                 ui->textPort->setText("25565");
@@ -576,6 +580,10 @@ void GUI::on_networkConfirm_clicked()
                 ui->textPort->setText("25565");
             setGridLayout(ui->gridLayout, false);
             ui->doubleSpinBoxTaktowanieObiektu->setEnabled(true);
+            ui->radioJednostronne->setEnabled(true);
+            ui->radioObustronne->setEnabled(true);
+            ui->radioObiektStart->setEnabled(true);
+            ui->radioObiektStop->setEnabled(true);
 
             QString portText = ui->textPort->toPlainText();  // bo to QTextEdit
             int port = portText.toInt();
